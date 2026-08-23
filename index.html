@@ -115,6 +115,21 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .icard .val small{font-size:.85rem;color:var(--ink-soft);font-weight:400;letter-spacing:.1em}
 .invest-note{font-size:.78rem;color:var(--ink-soft);letter-spacing:.1em}
 @media(max-width:720px){.invest-cards{flex-direction:column}.icard{border-left:none;border-top:1px solid var(--line)}.icard:first-child{border-top:none}}
+.invest-claim{font-family:var(--serif);font-size:clamp(1.05rem,2.2vw,1.35rem);font-weight:600;letter-spacing:.24em;color:var(--bronze-deep);margin:0 0 44px}
+
+/* 實價登錄比較表 */
+.comp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:900px;margin:0 auto 20px}
+.comp-table{width:100%;min-width:700px;border-collapse:collapse;background:var(--white);border:1px solid var(--line);text-align:left;font-size:.92rem}
+.comp-table th{background:var(--bone-deep);color:var(--ink-soft);font-size:.74rem;font-weight:400;letter-spacing:.2em;padding:14px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+.comp-table td{padding:16px;border-bottom:1px solid var(--line);color:var(--ink-soft);font-weight:300;white-space:nowrap}
+.comp-table tbody tr:last-child td{border-bottom:none}
+.comp-table .num{font-family:var(--serif);font-weight:400;color:var(--ink)}
+/* 本案列：bronze 左框線 + 底色加深 + 字重加粗 */
+.comp-table tr.self td{background:var(--bone);color:var(--ink);font-weight:400}
+.comp-table tr.self td:first-child{box-shadow:inset 3px 0 0 var(--bronze);font-weight:600}
+.comp-table tr.self .num{color:var(--bronze-deep);font-weight:600}
+.comp-tag{display:inline-block;margin-left:10px;padding:2px 8px;border:1px solid var(--bronze);color:var(--bronze-deep);font-family:var(--sans);font-size:.68rem;font-weight:400;letter-spacing:.08em;white-space:nowrap}
+.comp-note{max-width:900px;margin:0 auto 30px;text-align:left;font-size:.75rem;line-height:1.9;font-weight:300;letter-spacing:.06em;color:var(--ink-soft)}
 
 /* location */
 .location{background:var(--white)}
@@ -267,6 +282,47 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <div class="icard"><div class="lab">年租金收入</div><div class="val" id="annualVal">43.2<small> 萬</small></div></div>
       <div class="icard"><div class="lab">粗投報率</div><div class="val" id="yieldVal">—</div></div>
     </div>
+    <p class="invest-claim">低總價・低單價・增值潛力</p>
+
+    <div class="comp-scroll">
+      <table class="comp-table">
+        <thead>
+          <tr><th>社區（捷運站）</th><th>型態</th><th>坪數</th><th>總價</th><th>單價</th></tr>
+        </thead>
+        <tbody>
+          <tr class="self">
+            <td>何必館・本案（內湖站）</td>
+            <td>成屋・屋齡約 8 年</td>
+            <td class="num">16.25 坪</td>
+            <td class="num">1,980 萬</td>
+            <td><span class="num">約 121.8 萬/坪</span><span class="comp-tag">較周邊成交低約 9%–26%</span></td>
+          </tr>
+          <tr>
+            <td>文心移動光城（港墘站）</td>
+            <td>成屋</td>
+            <td class="num">16.65 坪</td>
+            <td class="num">2,240 萬</td>
+            <td class="num">134.53 萬/坪</td>
+          </tr>
+          <tr>
+            <td>碧湖雲景（港墘站）</td>
+            <td>預售</td>
+            <td class="num">16.42 坪</td>
+            <td class="num">2,490 萬</td>
+            <td class="num">151.64 萬/坪</td>
+          </tr>
+          <tr>
+            <td>EAT國際館（永春站・跨區參考）</td>
+            <td>成屋</td>
+            <td class="num">15.85 坪</td>
+            <td class="num">2,600 萬</td>
+            <td class="num">164.04 萬/坪</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="comp-note">＊比較物件為 115 年 5–6 月實價登錄／預售揭露之成交資訊，僅供參考；<br>各物件屋齡、樓層、型態與區位條件不同，實際價值請以個案為準。資料來源：內政部實價登錄。</p>
+
     <p class="invest-note">＊租金為周邊同型產品行情參考，投報率以年租金 ÷ 開價計算，未計持有成本；實際條件以現場洽談為準。</p>
   </div>
 </section>
