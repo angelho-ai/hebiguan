@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>何必館｜內湖精品套房 屋主自售</title>
-<meta name="description" content="何必館・台北市內湖區內湖路二段428號。步行約2分鐘到捷運內湖站與CITYLINK，內湖科技園區生活圈，16.25坪精品套房，月租金行情32,000，屋主自售，線上預約看屋。">
-<meta property="og:title" content="何必館｜內湖精品套房 屋主自售">
+<title>何必館｜內湖一房一廳 屋主自售</title>
+<meta name="description" content="何必館・台北市內湖區內湖路二段428號。步行約2分鐘到捷運內湖站與CITYLINK，內湖科技園區生活圈，16.25坪一房一廳，月租金行情32,000，屋主自售，線上預約看屋。">
+<meta property="og:title" content="何必館｜內湖一房一廳 屋主自售">
 <meta property="og:description" content="捷運內湖站步行約2分鐘・內科生活圈・輕資產高投報。線上預約 8/29 看屋時段。">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,6 +48,7 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .nav-links a:hover{color:var(--bronze-deep)}
 .nav-cta{background:var(--ink);color:var(--white);padding:9px 22px;font-size:.82rem;letter-spacing:.24em;transition:background .3s}
 .nav-cta:hover{background:var(--bronze-deep)}
+@media(max-width:1000px){.nav-links{gap:18px}}
 @media(max-width:820px){.nav-links{display:none}}
 
 /* hero */
@@ -85,6 +86,9 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .feat h3{font-family:var(--serif);font-size:1.25rem;letter-spacing:.16em;margin:16px 0 12px}
 .feat p{color:var(--ink-soft);font-weight:300;font-size:.95rem}
 @media(max-width:720px){.feat-grid{grid-template-columns:1fr}}
+
+/* equip — 沿用 .feat-grid / .feat 卡片樣式 */
+.equip{background:var(--bone)}
 
 /* invest */
 .invest{background:linear-gradient(180deg,var(--bone-deep),var(--bone));text-align:center}
@@ -168,6 +172,7 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
     <div class="nav-links">
       <a href="#feature">行銷亮點</a>
       <a href="#invest">投資價值</a>
+      <a href="#equip">精選配備</a>
       <a href="#location">區位機能</a>
       <a href="#specs">建築資訊</a>
       <a href="#gallery">實景相簿</a>
@@ -184,7 +189,7 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
     <h1 class="hero-title">何必館</h1>
     <div class="hero-en">Where the Lake Meets the City</div>
     <div class="hero-line"></div>
-    <p class="hero-tag">步行約 2 分鐘，捷運內湖站與 CITYLINK 就在轉角。<br>16.25 坪精品套房，輕資產時代的內湖起點。</p>
+    <p class="hero-tag">步行約 2 分鐘，捷運內湖站與 CITYLINK 就在轉角。<br>16.25 坪一房一廳，輕資產時代的內湖起點。</p>
     <div class="hero-addr">台北市內湖區・內湖路二段 428 號</div>
     <a class="hero-cta" href="#booking">預約 8/29 看屋</a>
   </div>
@@ -194,7 +199,7 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
 <!-- ═══════════ STATS ═══════════ -->
 <div class="stats">
   <div class="stats-grid">
-    <div class="stat"><b>16.25<small style="font-size:.9rem"> 坪</small></b><span>精品套房</span></div>
+    <div class="stat"><b>16.25<small style="font-size:.9rem"> 坪</small></b><span>一房一廳</span></div>
     <div class="stat"><b>2<small style="font-size:.9rem"> 分鐘</small></b><span>步行捷運內湖站</span></div>
     <div class="stat"><b>32,000</b><span>月租金行情（NT$）</span></div>
     <div class="stat"><b>2018</b><span>第四季完工</span></div>
@@ -213,7 +218,7 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <div class="feat reveal">
         <div class="feat-num">01</div>
         <h3>內湖科技園區生活圈</h3>
-        <p>緊鄰內湖科技園區通勤廊帶，科技與媒體產業工作人口帶來穩定而長期的租賃需求，小坪數套房正是內科租客的首選型態。</p>
+        <p>緊鄰內湖科技園區通勤廊帶，科技與媒體產業工作人口帶來穩定而長期的租賃需求，一房一廳的格局正是內科租客的首選型態。</p>
       </div>
       <div class="feat reveal">
         <div class="feat-num">02</div>
@@ -247,6 +252,39 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <div class="icard"><div class="lab">粗投報率</div><div class="val" id="yieldVal">—</div></div>
     </div>
     <p class="invest-note">＊租金為周邊同型產品行情參考，投報率以年租金 ÷ 開價計算，未計持有成本；實際條件以現場洽談為準。</p>
+  </div>
+</section>
+
+<!-- ═══════════ EQUIP ═══════════ -->
+<section class="equip" id="equip">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Equipped</div>
+      <h2 class="sec-title">精選配備</h2>
+      <p class="sec-sub">本戶隨屋附贈，交屋即可入住。</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat reveal">
+        <div class="feat-num">01</div>
+        <h3>電動窗簾</h3>
+        <p>全室電動窗簾，一鍵調節光線的深淺。晨光與夜色之間，只需要一個動作。</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-num">02</div>
+        <h3>大金 DAIKIN 冷氣</h3>
+        <p>日本大金變頻空調，安靜、省電、風感細膩，是長住者才會在意的那種舒適。</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-num">03</div>
+        <h3>Panasonic 廚具</h3>
+        <p>國際牌整體廚具，檯面與收納一體規劃，讓開伙這件事回到日常的從容。</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-num">04</div>
+        <h3>TOTO 免治馬桶</h3>
+        <p>TOTO 免治衛浴設備，以細節照顧每日的起居，是不張揚卻天天有感的講究。</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -291,14 +329,13 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <div class="spec-row"><dt>完工時間</dt><dd>2018 年第四季</dd></div>
       <div class="spec-row"><dt>樓　層</dt><dd>地上 14／15 層・地下 2 層</dd></div>
       <div class="spec-row"><dt>棟　戶</dt><dd>2 棟・72 戶住家・3 戶店面</dd></div>
-      <div class="spec-row"><dt>本戶坪數</dt><dd>16.25 坪</dd></div>
-      <div class="spec-row"><dt>社區規劃</dt><dd>2 房（20・26・28・30 坪）</dd></div>
+      <div class="spec-row"><dt>本戶坪數</dt><dd>16.25 坪・一房一廳</dd></div>
       <div class="spec-row"><dt>土地分區</dt><dd>商三</dd></div>
       <div class="spec-row"><dt>大樓座向</dt><dd>朝東北</dd></div>
       <div class="spec-row"><dt>車　位</dt><dd>機械車位 47 個</dd></div>
       <div class="spec-row"><dt>基　地</dt><dd>192 坪</dd></div>
       <div class="spec-row"><dt>建蔽率</dt><dd>65.00%</dd></div>
-      <div class="spec-row"><dt>公設比</dt><dd>36.00%（起）</dd></div>
+      <div class="spec-row"><dt>公設比</dt><dd>35.00%（本戶）</dd></div>
       <div class="spec-row"><dt>國小學區</dt><dd>碧湖國小</dd></div>
       <div class="spec-row"><dt>國中學區</dt><dd>內湖國中</dd></div>
     </dl>
@@ -379,9 +416,14 @@ const CONFIG = {
   /* 5. 相簿：把照片/影片放進 media/ 資料夾後，把檔名加進下面清單（顯示順序＝清單順序）
         第一個項目會同時作為頁首背景大圖。支援 jpg/png/webp/mp4/webm。 */
   MEDIA: [
-    // "living-room.jpg",
-    // "bedroom.jpg",
-    // "tour.mp4",
+    "exterior.jpg",
+    "interior-tour.mp4",
+    "lifestyle.jpg",
+    "citylink-1.jpg",
+    "citylink-2.jpg",
+    "ev-parking-1.jpg",
+    "ev-parking-2.jpg",
+    "map-3d.gif",
   ],
 };
 /* ═══════════════════════════════════════════════════════════
