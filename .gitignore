@@ -1,3 +1,7 @@
 node_modules
 .DS_Store
 .vercel
+
+# 原始照片（網站使用 media/ 根目錄下的壓縮副本）
+media/室內照片/
+media/公設照片/
