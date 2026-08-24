@@ -27,8 +27,12 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--ink);background:var(--bone);line-height:1.75;-webkit-font-smoothing:antialiased}
-img,video{max-width:100%;display:block}
+/* overflow-x 只是最後一道保險，真正的溢出源已在各元件個別修掉 */
+body{font-family:var(--sans);color:var(--ink);background:var(--bone);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* iframe 原本不在這條規則裡，Google 地圖的內建寬度會撐破 grid 欄位 */
+img,video,iframe{max-width:100%;display:block}
+/* grid／flex 子項預設 min-width:auto，內容再大都不肯縮；一律允許縮到 0 */
+.loc-grid>*,.amen-grid>*,.feat-grid>*,.equip-grid>*,.strip>*,.map-col>*,.stats-grid>*,.unit-facts>*{min-width:0}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 .serif{font-family:var(--serif)}
@@ -92,13 +96,13 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 
 /* stat strip */
 .stats{background:var(--ink);color:var(--bone);padding:0}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:1160px;margin:0 auto}
+.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));max-width:1160px;margin:0 auto}
 .stat{padding:44px 12px;text-align:center;border-left:1px solid rgba(247,244,238,.12)}
 .stat:first-child{border-left:none}
 .stat b{font-family:var(--serif);font-size:clamp(1.5rem,3vw,2.1rem);font-weight:600;color:#e8dcc4;display:block;letter-spacing:.06em}
 .stat-unit{font-size:.9rem;font-weight:400}
 .stat span{font-size:.78rem;letter-spacing:.24em;color:#b7b1a4}
-@media(max-width:720px){.stats-grid{grid-template-columns:repeat(2,1fr)}.stat:nth-child(3){border-left:none}}
+@media(max-width:720px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:nth-child(3){border-left:none}}
 
 /* features */
 .features{background:var(--bone)}
@@ -113,7 +117,7 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .feature-copy small{display:block;margin-bottom:12px;color:#dfd1b6;font-size:.68rem;letter-spacing:.48em}
 .feature-copy h3{font-family:var(--serif);font-size:clamp(1.7rem,4vw,3rem);line-height:1.35;letter-spacing:.14em;font-weight:600}
 .feature-copy p{margin-top:17px;max-width:500px;font-weight:300;letter-spacing:.08em;color:rgba(255,253,249,.86)}
-.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:54px}
+.feat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;margin-top:54px}
 .feat{background:var(--white);border:1px solid var(--line);padding:42px 36px;position:relative;transition:transform .4s,box-shadow .4s}
 .feat:hover{transform:translateY(-4px);box-shadow:0 18px 40px -20px rgba(60,50,30,.25)}
 .feat-num{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:2.2rem;color:var(--bronze);line-height:1}
@@ -125,26 +129,26 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
   .feature-copy{left:24px;right:24px;bottom:34px}
   .feature-copy small{letter-spacing:.3em}
   .feature-copy p{font-size:.9rem}
-  .feat-grid{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:minmax(0,1fr)}
 }
 
 /* equip — 沿用 .feat 卡片樣式，四類配備以兩欄呈現 */
 .equip{background:var(--bone)}
-.equip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:54px}
+.equip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;margin-top:54px}
 .equip-list{list-style:none;margin-top:4px}
 .equip-list li{display:flex;align-items:baseline;gap:10px;color:var(--ink-soft);font-weight:300;font-size:.95rem;padding:10px 0;border-top:1px solid var(--line)}
 .equip-list li:first-child{border-top:none}
 .equip-list li::before{content:"—";color:var(--bronze);flex-shrink:0}
-@media(max-width:900px){.equip-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.equip-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* amenity — 標籤牆 */
 .amenity{background:var(--bone-deep)}
-.amen-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:54px}
+.amen-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin-top:54px}
 .amen-block h3{font-family:var(--serif);font-size:1.15rem;letter-spacing:.16em;font-weight:600;padding-bottom:14px;margin-bottom:22px;border-bottom:1px solid var(--line)}
 .tag-wall{display:flex;flex-wrap:wrap;gap:10px}
 .tag-wall span{background:var(--white);border:1px solid var(--line);padding:9px 16px;font-size:.85rem;font-weight:300;letter-spacing:.12em;color:var(--ink-soft);transition:border-color .3s,color .3s}
 .tag-wall span:hover{border-color:var(--bronze);color:var(--bronze-deep)}
-@media(max-width:820px){.amen-grid{grid-template-columns:1fr;gap:38px}}
+@media(max-width:820px){.amen-grid{grid-template-columns:minmax(0,1fr);gap:38px}}
 
 /* invest：上半部以投資意象照片鋪底，暖白漸層向下過渡，避免干擾數據表閱讀 */
 .invest{position:relative;text-align:center;background:
@@ -178,31 +182,31 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 
 /* location */
 .location{background:var(--white)}
-.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:54px;align-items:start}
+.loc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin-top:54px;align-items:start}
 .loc-list{list-style:none}
 .loc-list li{display:flex;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);font-weight:300}
 .loc-list .tag{flex-shrink:0;font-size:.72rem;letter-spacing:.2em;color:var(--bronze-deep);border:1px solid var(--bronze);padding:3px 10px}
 .map-box{border:1px solid var(--line);aspect-ratio:4/3;background:var(--bone-deep)}
-.map-box iframe{width:100%;height:100%;border:0}
-@media(max-width:820px){.loc-grid{grid-template-columns:1fr}}
+.map-box iframe{width:100%;max-width:100%;height:100%;border:0}
+@media(max-width:820px){.loc-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* specs */
 .specs{background:var(--bone)}
-.unit-facts{display:grid;grid-template-columns:repeat(4,1fr);margin-top:48px;background:var(--white);border:1px solid var(--line)}
+.unit-facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:48px;background:var(--white);border:1px solid var(--line)}
 .unit-fact{padding:28px 18px;text-align:center;border-left:1px solid var(--line)}
 .unit-fact:first-child{border-left:0}
 .unit-fact b{display:block;font-family:var(--serif);font-size:1.45rem;color:var(--bronze-deep);letter-spacing:.08em}
 .unit-fact span{display:block;margin-top:6px;font-size:.75rem;color:var(--ink-soft);letter-spacing:.18em}
-.spec-table{margin-top:54px;display:grid;grid-template-columns:1fr 1fr;gap:0 60px}
+.spec-table{margin-top:54px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 60px}
 .spec-row{display:flex;justify-content:space-between;gap:20px;padding:15px 4px;border-bottom:1px solid var(--line);font-size:.95rem}
 .spec-row dt{color:var(--ink-soft);letter-spacing:.2em;font-weight:400;flex-shrink:0}
 .spec-row dd{text-align:right;font-weight:400}
-@media(max-width:720px){.unit-facts{grid-template-columns:1fr 1fr}.unit-fact:nth-child(3){border-left:0;border-top:1px solid var(--line)}.unit-fact:nth-child(4){border-top:1px solid var(--line)}.spec-table{grid-template-columns:1fr}}
+@media(max-width:720px){.unit-facts{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.unit-fact:nth-child(3){border-left:0;border-top:1px solid var(--line)}.unit-fact:nth-child(4){border-top:1px solid var(--line)}.spec-table{grid-template-columns:minmax(0,1fr)}}
 
 /* 圖片帶（分區呈現：周邊生活商圈／社區公設／室內實景） */
 .strip-title{font-family:var(--serif);font-size:1.05rem;letter-spacing:.2em;font-weight:600;margin:64px 0 20px;
   padding-bottom:12px;border-bottom:1px solid var(--line)}
-.strip{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:210px;gap:14px}
+.strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:210px;gap:14px}
 .strip-item{overflow:hidden;background:var(--bone-deep);border:1px solid var(--line);cursor:pointer;position:relative;padding:0}
 .strip-item::after{content:attr(data-label);position:absolute;left:12px;bottom:12px;padding:5px 9px;background:rgba(23,21,18,.72);color:#fffdf9;font-size:.7rem;letter-spacing:.1em;pointer-events:none}
 .strip-item:first-child{grid-column:span 2}
@@ -215,9 +219,10 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 }
 
 /* 3D 立體地圖：放在 Google 地圖上方 */
-.map-col{display:flex;flex-direction:column;gap:14px}
-.map3d{border:1px solid var(--line);background:var(--bone-deep);overflow:hidden;cursor:pointer}
-.map3d img{width:100%;display:block;transition:transform .8s var(--ease)}
+.map-col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.map3d{border:1px solid var(--line);background:var(--bone-deep);overflow:hidden;cursor:pointer;min-width:0}
+/* map-3d.gif 原圖 1280px 寬，沒有 height:auto 會在窄螢幕撐開欄位 */
+.map3d img{width:100%;max-width:100%;height:auto;display:block;transition:transform .8s var(--ease)}
 .map3d:hover img{transform:scale(1.04)}
 
 /* 室內實景：手機直式影片以置中的直式導覽框呈現 */
@@ -261,7 +266,8 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .form-msg{margin-top:22px;font-size:.92rem;letter-spacing:.1em;min-height:1.5em}
 .form-msg.ok{color:#cfe3b8}
 .form-msg.err{color:#e8a794}
-.honeypot{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
+/* 防機器人誘餌欄位：用裁切隱藏，不再用 left:-9999px（那會多出一個視窗外的元素） */
+.honeypot{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media(max-width:560px){.frow{flex-direction:column;align-items:flex-start;gap:6px}.frow label{width:auto}.frow input,.frow select{width:100%}}
 
 /* footer */
@@ -595,7 +601,7 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
     <div class="reveal" style="text-align:center">
       <div class="eyebrow">Reservation</div>
       <h2 class="sec-title">預約看屋</h2>
-      <p class="sec-sub" style="margin:0 auto">留下資料並選擇時段，將由專人與您確認。<br>目前開放場次：8/29（六）下午 14:00 – 18:00，每 30 分鐘一場；<br>時間不合也沒關係，選擇「其他時間」再另行協調。</p>
+      <p class="sec-sub" style="margin:0 auto">留下資料並選擇時段，將由專人與您確認。<br>目前開放場次：8/29（六）下午 14:00 – 18:00，每小時一場、每場限 2 組；<br>時間不合也沒關係，選擇「其他時間」再另行協調。</p>
     </div>
     <form class="form-card reveal" id="bookForm" novalidate>
       <div class="frow"><label for="fName">姓　　名</label><input id="fName" name="name" type="text" autocomplete="name" required></div>
@@ -642,15 +648,19 @@ const CONFIG = {
   /* 3. 月租金行情（元）。投資價值區的月租金、年租金、投報率都由這個數字推算 */
   RENT: 36000,
 
-  /* 4. 看屋日期與時段。
-        一般日期：填 start / end（24h 制），每 30 分鐘自動切一場。
-        彈性選項：改填 slots 陣列，就會原樣顯示（不自動切時段）。 */
+  /* 4. 每個時段可接受的組數；額滿的時段會顯示「已額滿」並無法選取。
+        改這個數字要同步改 apps-script/Code.gs 的 SLOT_CAPACITY。 */
+  SLOT_CAPACITY: 2,
+
+  /* 5. 看屋日期與時段。
+        一般日期：填 start / end（24h 制），every 是每場長度（分鐘）。
+        彈性選項：改填 slots 陣列原樣顯示，並加 flexible:true 表示不受名額限制。 */
   DATES: [
-    { label: "2026/8/29（六）", start: "14:00", end: "18:00" },
-    { label: "其他時間（送出後與您協調）", slots: ["由專人與您聯繫安排"] },
+    { label: "2026/8/29（六）", start: "14:00", end: "18:00", every: 60 },
+    { label: "其他時間（送出後與您協調）", slots: ["由專人與您聯繫安排"], flexible: true },
   ],
 
-  /* 5. 照片影片：分區呈現，把檔名放進對應群組即可（顯示順序＝陣列順序）。
+  /* 6. 照片影片：分區呈現，把檔名放進對應群組即可（顯示順序＝陣列順序）。
         hero      ── 頁首背景大圖（單一檔名）
         lifestyle ── 區位機能下方的「生活・休閒・通勤機能」圖片帶
         community ── 社區公設區塊的圖片帶（留空則整條隱藏）
@@ -834,34 +844,71 @@ const CONFIG = {
   }
 })();
 
-/* 看屋日期與時段選單 */
-(function(){
+/* 看屋日期與時段選單（含剩餘名額） */
+const Booking = (function(){
   const dateSel = document.getElementById("fDate");
   const slotSel = document.getElementById("fSlot");
   const toMin = t => { const [h,m] = t.split(":").map(Number); return h*60+m; };
   const toStr = m => String(Math.floor(m/60)).padStart(2,"0") + ":" + String(m%60).padStart(2,"0");
-  function buildSlots(d){
+
+  /* 各「日期|時段」已預約組數；null 代表還沒查到（或查詢失敗）→ 不顯示名額字樣 */
+  let taken = null;
+
+  function slotsOf(d){
+    if (d.slots) return d.slots;
+    const step = d.every || 60, out = [];
+    for (let m = toMin(d.start); m + step <= toMin(d.end); m += step) out.push(toStr(m) + " – " + toStr(m + step));
+    return out;
+  }
+
+  function buildSlots(){
+    const d = CONFIG.DATES[dateSel.selectedIndex];
+    if (!d) return;
+    const prev = slotSel.value;
     slotSel.innerHTML = "";
-    let list;
-    if (d.slots) {
-      list = d.slots;                       /* 彈性選項：原樣顯示 */
-    } else {
-      list = [];
-      for (let m = toMin(d.start); m < toMin(d.end); m += 30) list.push(toStr(m) + " – " + toStr(m+30));
-    }
-    list.forEach(v => {
+    slotsOf(d).forEach(v => {
       const opt = document.createElement("option");
-      opt.value = opt.textContent = v;
+      opt.value = v;
+      /* 彈性時段不受名額限制；availability 查不到時也只顯示原文字 */
+      if (d.flexible || taken === null) {
+        opt.textContent = v;
+      } else {
+        const used = taken[d.label + "|" + v] || 0;
+        const left = Math.max(0, CONFIG.SLOT_CAPACITY - used);
+        if (left === 0) { opt.textContent = v + "（已額滿）"; opt.disabled = true; }
+        else if (left === 1) { opt.textContent = v + "（剩 1 組）"; }
+        else { opt.textContent = v + "（可預約・剩 " + left + " 組）"; }
+      }
       slotSel.appendChild(opt);
     });
+    /* 盡量保留原本選的時段，但不要停在已額滿的選項上 */
+    const keep = [...slotSel.options].find(o => o.value === prev && !o.disabled);
+    const first = [...slotSel.options].find(o => !o.disabled);
+    slotSel.value = (keep || first || slotSel.options[0] || {}).value || "";
   }
+
+  async function refresh(){
+    if (!CONFIG.SCRIPT_URL) return;
+    try {
+      const res = await fetch(CONFIG.SCRIPT_URL + "?action=availability", { method: "GET" });
+      const data = await res.json();
+      if (data && typeof data === "object") { taken = data; buildSlots(); }
+    } catch (err) {
+      /* 查不到名額不影響預約：時段照常顯示，只是沒有剩餘組數字樣 */
+      taken = null;
+    }
+  }
+
   CONFIG.DATES.forEach((d,i) => {
     const opt = document.createElement("option");
     opt.value = d.label; opt.textContent = d.label; opt.dataset.idx = i;
     dateSel.appendChild(opt);
   });
-  dateSel.addEventListener("change", () => buildSlots(CONFIG.DATES[dateSel.selectedIndex]));
-  buildSlots(CONFIG.DATES[0]);
+  dateSel.addEventListener("change", buildSlots);
+  buildSlots();
+  refresh();
+
+  return { refresh, buildSlots };
 })();
 
 /* 個資聲明展開 */
@@ -887,19 +934,31 @@ document.getElementById("bookForm").addEventListener("submit", async function(e)
   }
   btn.disabled = true; msg.textContent = "送出中…";
   try {
-    const data = new URLSearchParams({
+    const payload = {
       name: form.name.value.trim(),
       title: form.title.value,
       phone: form.phone.value.trim(),
       email: form.email.value.trim(),
       date: form.date.value,
       slot: form.slot.value,
-    });
-    await fetch(CONFIG.SCRIPT_URL, { method: "POST", mode: "no-cors", body: data });
-    msg.textContent = "預約資料已送出，時段仍以後續聯繫確認為準。";
-    msg.classList.add("ok");
-    form.reset();
-    document.querySelectorAll("#fDate option").length && document.getElementById("fDate").dispatchEvent(new Event("change"));
+    };
+    /* 不自訂 Content-Type：維持 text/plain 才不會觸發 CORS preflight，
+       這樣就能讀回 Apps Script 的 JSON 回應（判斷是否額滿）。 */
+    const res = await fetch(CONFIG.SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
+    const out = await res.json();
+
+    if (out && out.ok) {
+      msg.textContent = "預約資料已送出，時段仍以後續聯繫確認為準。";
+      msg.classList.add("ok");
+      form.reset();
+      document.getElementById("fDate").dispatchEvent(new Event("change"));
+      Booking.refresh();
+    } else if (out && out.reason === "full") {
+      msg.textContent = "該時段剛剛額滿了，請改選其他時段。"; msg.classList.add("err");
+      await Booking.refresh();
+    } else {
+      msg.textContent = "送出失敗，請稍後再試。"; msg.classList.add("err");
+    }
   } catch (err) {
     msg.textContent = "送出失敗，請稍後再試。"; msg.classList.add("err");
   } finally {
