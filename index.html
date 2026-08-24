@@ -687,7 +687,9 @@ const CONFIG = {
       "interior-bathroom-wide.jpg",
       "interior-balcony-view.jpg",
     ],
-    map: "map-3d.gif",
+    /* 3D 立體地圖：與下方 Google 地圖重複，暫時停用。
+       要恢復就把檔名填回來（檔案放 media/），整塊會自動出現在 Google 地圖上方。 */
+    map: "",
   },
 
   /* 圖片說明：同時顯示在縮圖上，並提供搜尋引擎與螢幕閱讀器辨識。 */
@@ -713,7 +715,6 @@ const CONFIG = {
     "interior-bathroom.jpg": "何必館本戶浴室、淋浴間與免治馬桶",
     "interior-bathroom-wide.jpg": "何必館本戶浴室乾濕分離空間",
     "interior-balcony-view.jpg": "何必館本戶工作陽台與十一樓窗景",
-    "map-3d.gif": "何必館周邊 3D 立體地圖",
   },
 };
 /* ═══════════════════════════════════════════════════════════
@@ -800,9 +801,12 @@ const CONFIG = {
   band("lifestyleBand", "生活・休閒・通勤機能", M.lifestyle);
   band("communityBand", "社區公設實景", M.community);
 
-  /* ── 3D 立體地圖 ── */
-  if (M.map) {
-    const box = document.getElementById("map3d");
+  /* ── 3D 立體地圖：沒設定就整個容器移除，不要在 map-col 留下 flex 間距 ── */
+  const mapBox = document.getElementById("map3d");
+  if (!M.map) {
+    if (mapBox) mapBox.remove();
+  } else {
+    const box = mapBox;
     box.className = "map3d";
     box.tabIndex = 0;
     box.setAttribute("role", "button");
