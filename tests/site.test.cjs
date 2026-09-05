@@ -92,7 +92,12 @@ test('form requires real name, phone and consent; LINE ID is optional and buyer 
   assert.doesNotMatch(html, /非顯示名稱|每個時段接待一組，留時間好好認識這個家/);
   assert.equal(config.SLOT_CAPACITY, 1);
   assert.match(html, /一只皮箱，即可入住。/);
-  assert.doesNotMatch(html, /id="fTitle"|form\.title\.value/);
+  const title = html.match(/<select[^>]*id="fTitle"[\s\S]*?<\/select>/)[0];
+  assert.doesNotMatch(title, /\brequired\b|\bselected\b/);
+  assert.match(title, /<option value="">請選擇<\/option>/);
+  assert.match(title, /<option value="先生">先生<\/option><option value="小姐">小姐<\/option>/);
+  assert.match(html, /label for="fTitle">稱謂<small>選填<\/small>/);
+  assert.doesNotMatch(html, /form\.title\.value/); // Avoid the native form title attribute.
 });
 
 test('transaction references are always visible while full building details start collapsed', () => {
@@ -145,13 +150,15 @@ function submissionHarness(response = { ok: true }, capabilities = { bookingSche
   const slot = '14:00 – 15:00';
   const form = {
     name: { value: ' 王測試 ' }, phone: { value: ' 0900000000 ', removeAttribute() {}, setAttribute() {}, focus() {} },
+    title: { value: '' },
     lineId: { value: '' }, company: { value: '' },
     preferredTime: { value: '' },
     date: { value: '2026/9/6（日）' },
     slot: { value: slot, selectedOptions: [{ value: slot, disabled: false }] },
     reset() { resetCount++; },
-    querySelectorAll() { return [this.name, this.phone, this.lineId, this.date, this.slot, this.preferredTime]; },
+    querySelectorAll() { return [this.name, this.title, this.phone, this.lineId, this.date, this.slot, this.preferredTime]; },
   };
+  form.elements = { namedItem: name => form[name] };
   form.querySelectorAll().forEach(input => { input.dataset = {}; });
   const source = script.slice(script.indexOf('/* 表單送出 →'), script.indexOf('/* 進場動畫：'));
   const rules = rulesAt();
@@ -202,6 +209,37 @@ test('provided LINE ID is trimmed and sent without an email property', async () 
   const payload = JSON.parse(h.requests[1].options.body);
   assert.equal(payload.lineId, 'buyer_line');
   assert.equal(Object.hasOwn(payload, 'email'), false);
+});
+
+test('optional titles use existing backend columns and owner notification without collecting email', async () => {
+  for (const title of ['', '先生', '小姐']) {
+    const frontend = submissionHarness();
+    frontend.form.title.value = title;
+    await frontend.submit();
+    const payload = JSON.parse(frontend.requests.find(request => request.options.method === 'POST').options.body);
+    assert.equal(payload.title, title);
+    assert.equal(Object.hasOwn(payload, 'email'), false);
+    const backend = backendHarness();
+    assert.deepEqual(backend.post(payload), { ok: true });
+    assert.equal(backend.rows[1][2], title);
+    assert.equal(backend.rows[1][4], '');
+    assert.equal(backend.rows[1][5], payload.date);
+    assert.equal(backend.rows[1][6], payload.slot);
+    assert.ok(backend.messages[0].subject.includes('王測試' + title));
+    assert.ok(backend.messages[0].body.includes('姓名：王測試 ' + title));
+    assert.deepEqual(backend.post(payload), { ok: true });
+    assert.equal(backend.rows.length, 2);
+    assert.equal(backend.messages.length, 1);
+  }
+});
+
+test('unexpected optional title is omitted and a missing title never blocks a reservation', async () => {
+  const h = submissionHarness();
+  h.form.title.value = 'unexpected';
+  await h.submit();
+  const payload = JSON.parse(h.requests.find(request => request.options.method === 'POST').options.body);
+  assert.equal(payload.title, '');
+  assert.equal(h.nodes.bookingReceipt.hidden, false);
 });
 
 test('old or unreadable backend capabilities block POST to prevent silently losing LINE ID', async () => {

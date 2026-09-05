@@ -429,6 +429,11 @@ body.lightbox-open{overflow:hidden}
 .frow select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' stroke='%23cdb684' fill='none' stroke-width='1.5'/></svg>");background-repeat:no-repeat;background-position:right 6px center;cursor:pointer}
 .frow select option{color:var(--ink);background:var(--bone)}
 .frow input::placeholder{color:#b7b1a4}
+.identity-row{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:24px}
+.identity-row .frow{flex-direction:column;align-items:stretch;gap:6px;min-width:0}
+.identity-row .frow label{width:auto}
+.identity-row input,.identity-row select{width:100%;min-width:0;min-height:44px}
+.identity-row select{padding-right:24px}
 .booking-contact-note{font-size:.875rem;color:#d2c9b9;margin-top:18px;line-height:1.8}
 .agree{display:flex;align-items:flex-start;gap:12px;padding:26px 4px 10px;font-size:.9rem;color:#e2dccf}
 .agree input{width:17px;height:17px;margin-top:4px;accent-color:var(--bronze);cursor:pointer}
@@ -878,7 +883,10 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <p class="booking-contact-note">填寫後將以電話、簡訊或您提供的 LINE 聯繫確認；收到確認後，再依約到場。</p>
     </div>
     <form class="form-card reveal" id="bookForm" novalidate>
-      <div class="frow"><label for="fName">姓名<small>必填</small></label><input id="fName" name="name" type="text" autocomplete="name" maxlength="100" placeholder="請填寫姓名" required></div>
+      <div class="identity-row">
+        <div class="frow"><label for="fName">姓名<small>必填</small></label><input id="fName" name="name" type="text" autocomplete="name" maxlength="100" placeholder="請填寫姓名" required></div>
+        <div class="frow"><label for="fTitle">稱謂<small>選填</small></label><select id="fTitle" name="title"><option value="">請選擇</option><option value="先生">先生</option><option value="小姐">小姐</option></select></div>
+      </div>
       <div class="frow"><label for="fPhone">聯絡電話<small>必填</small></label><input id="fPhone" name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder="請填手機或市話" required></div>
       <div class="frow"><label for="fLineId">LINE ID<small>選填</small></label><input id="fLineId" name="lineId" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="請填 LINE ID"></div>
       <div class="frow"><label for="fDate">看屋日期</label><select id="fDate" name="date"></select></div>
@@ -891,9 +899,9 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
         <span id="agreementLabel">我已閱讀並同意 <button type="button" id="privacyToggle" aria-expanded="false" aria-controls="privacyText">個資告知聲明事項</button>（必填）</span>
       </div>
       <div class="privacy-text" id="privacyText">
-        您提供的姓名、電話、LINE ID（選填）及看屋時間資訊，僅用於本戶看屋預約確認與聯繫，不另作其他行銷用途。
+        您提供的姓名、稱謂（選填）、電話、LINE ID（選填）及看屋時間資訊，僅用於本戶看屋預約確認與聯繫，不另作其他行銷用途。
         預約資料透過 Google Apps Script 處理並儲存於 Google 試算表，於本物件銷售結束後刪除。
-        您可於預約聯繫時要求查詢、更正或刪除資料；不提供 LINE ID 不影響預約。
+        您可於預約聯繫時要求查詢、更正或刪除資料；不提供稱謂或 LINE ID 不影響預約。
       </div>
       <div class="submit-row"><button class="submit-btn" type="submit" id="submitBtn">送出預約</button></div>
       <div class="form-msg" id="formMsg" role="status"></div>
@@ -1523,7 +1531,8 @@ document.getElementById("bookForm").addEventListener("submit", async function(e)
     msg.textContent = "表單尚未開放，請稍後再試。"; msg.classList.add("err"); return;
   }
   const flexible = CONFIG.DATES.find(d => d.label === form.date.value)?.flexible;
-  const payload = { name: form.name.value.trim(), title: "", phone, lineId: form.lineId.value.trim(), privacyConsent: true,
+  const title = form.elements.namedItem("title").value;
+  const payload = { name: form.name.value.trim(), title: ["先生", "小姐"].includes(title) ? title : "", phone, lineId: form.lineId.value.trim(), privacyConsent: true,
     date: form.date.value, slot: form.slot.value, preferredTime: flexible ? form.preferredTime.value.trim() : "" };
   const fingerprint = JSON.stringify(payload);
   const retrying = pendingBooking?.uncertain && pendingBooking.fingerprint === fingerprint;
