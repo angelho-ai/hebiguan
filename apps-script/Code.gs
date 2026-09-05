@@ -11,7 +11,7 @@
 
 const SHEET_NAME = "預約";                       // 工作表名稱（不存在會自動建立）
 const NOTIFY_EMAIL = "angel.ho.ai.pm@gmail.com"; // 收到新預約時通知的信箱；設為 "" 則不寄信
-const SLOT_CAPACITY = 2;                         // 每個時段可接受的組數（需與 index.html 的 CONFIG.SLOT_CAPACITY 一致）
+const SLOT_CAPACITY = 1;                         // 每個時段可接受的組數（需與 index.html 的 CONFIG.SLOT_CAPACITY 一致）
 const FLEXIBLE_KEYWORD = "其他時間";              // 日期含這個字樣者視為彈性時段，不列入名額計算
 
 const HEADERS = ["時間", "姓名", "稱謂", "電話", "Email", "看屋日期", "時段"];

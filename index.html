@@ -763,7 +763,7 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
     <div class="reveal" style="text-align:center">
       <div class="eyebrow">Reservation</div>
       <h2 class="sec-title">預約看屋</h2>
-      <p class="sec-sub" style="margin:0 auto">留下資料並選擇時段，將由專人與您確認。<br>目前開放場次：9/5（六）、9/6（日）下午 14:00 – 17:00，每小時一場、每場限 2 組；<br>時間不合也沒關係，選擇「其他時間」再另行協調。</p>
+      <p class="sec-sub" style="margin:0 auto">留下資料並選擇時段，將由專人與您確認。<br>週末場次：9/6（日）、9/12（六）14:00、15:00、16:00，每場一小時、限 1 組。<br>平日場次：9/11（五）12:00 – 13:00，限 1 組。<br>時間不合也沒關係，選擇「其他時間」再另行協調。</p>
     </div>
     <form class="form-card reveal" id="bookForm" novalidate>
       <div class="frow"><label for="fName">姓　　名</label><input id="fName" name="name" type="text" autocomplete="name" required></div>
@@ -812,14 +812,15 @@ const CONFIG = {
 
   /* 4. 每個時段可接受的組數；額滿的時段會顯示「已額滿」並無法選取。
         改這個數字要同步改 apps-script/Code.gs 的 SLOT_CAPACITY。 */
-  SLOT_CAPACITY: 2,
+  SLOT_CAPACITY: 1,
 
   /* 5. 看屋日期與時段。
         一般日期：填 start / end（24h 制），every 是每場長度（分鐘）。
         彈性選項：改填 slots 陣列原樣顯示，並加 flexible:true 表示不受名額限制。 */
   DATES: [
-    { label: "2026/9/5（六）", start: "14:00", end: "17:00", every: 60 },
     { label: "2026/9/6（日）", start: "14:00", end: "17:00", every: 60 },
+    { label: "2026/9/11（五）", start: "12:00", end: "13:00", every: 60 },
+    { label: "2026/9/12（六）", start: "14:00", end: "17:00", every: 60 },
     { label: "其他時間（送出後與您協調）", slots: ["由專人與您聯繫安排"], flexible: true },
   ],
 
@@ -834,9 +835,11 @@ const CONFIG = {
     hero: "hero-exterior.jpg",
     lifestyle: [
       "citylink-1.jpg",
-      "湖光市場.jpeg",
-      "清白公園.jpg",
       "碧山岩賞櫻秘境.jpg",
+      "湖光市場.jpeg",
+      "Worldgym.jpeg",
+      "清白公園.jpg",
+      "AIT.jpeg",
       "ev-parking-2.jpg",
     ],
     community: [
@@ -898,6 +901,8 @@ const CONFIG = {
     "ev-parking-1.jpg": "CITYLINK 電動車充電停車場",
     "ev-parking-2.jpg": "CITYLINK 停車場電動車充電區",
     "湖光市場.jpeg": "湖光市場日常採買機能",
+    "Worldgym.jpeg": "World Gym 世界健身俱樂部（內湖星雲店）",
+    "AIT.jpeg": "美國在台協會（AIT）台北辦事處外觀",
     "清白公園.jpg": "清白公園綠地休憩空間",
     "碧山岩賞櫻秘境.jpg": "碧山巖賞櫻秘境",
     "內湖科技園區.jpeg": "內湖科技園區與台北城市景觀",
@@ -1243,6 +1248,10 @@ document.getElementById("bookForm").addEventListener("submit", async function(e)
   }
   if (!document.getElementById("fAgree").checked) {
     msg.textContent = "請先閱讀並勾選個資告知聲明。"; msg.classList.add("err"); return;
+  }
+  const selectedSlot = form.slot.selectedOptions[0];
+  if (!selectedSlot || selectedSlot.disabled || !selectedSlot.value) {
+    msg.textContent = "此日期已無可預約時段，請改選其他日期。"; msg.classList.add("err"); return;
   }
   if (!CONFIG.SCRIPT_URL) {
     msg.textContent = "表單尚未開放，請稍後再試。"; msg.classList.add("err"); return;
