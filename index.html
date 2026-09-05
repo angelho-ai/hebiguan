@@ -3,11 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>何必館｜內湖一房一廳・捷運 2 分鐘</title>
-<meta name="description" content="何必館・台北市內湖區內湖路二段428號。步行約2分鐘到捷運內湖站與CITYLINK，內湖科技園區生活圈，16.25坪一房一廳，月租金行情36,000，線上預約看屋。">
-<meta property="og:title" content="何必館｜內湖一房一廳・捷運 2 分鐘">
-<meta property="og:description" content="捷運內湖站步行約2分鐘・11樓大面採光・一房一廳・屋況新空屋，線上預約看屋。">
+<title>何必館｜11樓面山採光宅出售・開價1,980萬</title>
+<meta name="description" content="何必館11樓面山採光宅出售，開價1,980萬元、權狀16.25坪，開放式客廳與臥室配置。捷運內湖站步行約2分鐘，目前月租行情參考36,000元。室內實拍、配備與線上看屋預約。">
+<meta property="og:title" content="何必館｜11樓面山採光宅・1,980萬">
+<meta property="og:description" content="16.25坪・捷運內湖站步行約2分鐘・裝潢與收納配備。目前月租行情參考36,000元，查看室內實拍並預約看屋。">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:url" content="https://hebiguan.vercel.app/">
+<meta property="og:image" content="https://hebiguan.vercel.app/media/interior-living-window.jpg">
+<meta property="og:image:width" content="1800">
+<meta property="og:image:height" content="1350">
+<meta property="og:image:alt" content="何必館本戶室內實拍：大面採光與到頂系統收納">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://hebiguan.vercel.app/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
@@ -40,7 +48,7 @@ a{color:inherit;text-decoration:none}
 .eyebrow{font-size:.78rem;letter-spacing:.42em;color:var(--bronze);text-transform:uppercase;margin-bottom:14px}
 .sec-title{font-family:var(--serif);font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:600;letter-spacing:.14em;margin-bottom:10px}
 .sec-sub{color:var(--ink-soft);font-weight:300;max-width:640px}
-section{padding:96px 0}
+section{padding:96px 0;scroll-margin-top:64px}
 /* 進場動畫：--d 由 JS 依區塊內順序設定，做出標題→內文→卡片的分層 stagger */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:var(--d,0ms)}
 .reveal.on{opacity:1;transform:none}
@@ -69,8 +77,17 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .nav-links a:hover{color:var(--bronze-deep)}
 .nav-cta{background:var(--ink);color:var(--white);padding:9px 22px;font-size:.82rem;letter-spacing:.24em;transition:background .3s}
 .nav-cta:hover{background:var(--bronze-deep)}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.nav-toggle{display:none;min-height:44px;padding:8px;border:0;background:none;color:var(--ink);font:inherit;font-size:.85rem;letter-spacing:.1em;cursor:pointer}
+.nav-toggle::after{content:"＋";margin-left:6px;color:var(--bronze-deep)}
+.nav-toggle[aria-expanded="true"]::after{content:"－"}
+.mobile-nav{position:absolute;top:64px;left:0;right:0;padding:16px 24px 22px;background:var(--white);border-bottom:1px solid var(--line);box-shadow:0 16px 24px rgba(34,31,26,.08)}
+.mobile-nav a{display:block;min-height:48px;padding:10px 8px;border-bottom:1px solid var(--line);font-size:.9rem;letter-spacing:.1em}
+.mobile-nav[hidden],.frow[hidden]{display:none}
+.nav-toggle:focus-visible,.mobile-nav a:focus-visible{outline:2px solid var(--bronze-deep);outline-offset:2px}
+@media(hover:hover){.mobile-nav a:hover,.nav-toggle:hover{background:var(--bone-deep)}}
 @media(max-width:1000px){.nav-links{gap:18px}}
-@media(max-width:820px){.nav-links{display:none}}
+@media(max-width:820px){.nav-links{display:none}.nav-toggle{display:block}.nav{gap:8px;padding:0 16px}.nav-cta{padding:9px 14px}}
 
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--white);overflow:hidden;padding:0}
@@ -80,17 +97,26 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .hero-bg img{animation:kenburns 12s var(--ease) infinite alternate;will-change:transform}
 @keyframes kenburns{from{transform:scale(1.05)}to{transform:scale(1.12)}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,15,18,.55),rgba(15,15,18,.35) 45%,rgba(15,15,18,.55))}
-.hero-inner{position:relative;z-index:2;padding:120px 24px 90px}
+.hero-inner{position:relative;z-index:2;padding:112px 24px 82px}
 /* 文字後方的柔和暗色暈影，讓白字在任何底圖上都讀得到 */
 .hero-inner::before{content:"";position:absolute;inset:-6% -14%;z-index:-1;pointer-events:none;
   background:radial-gradient(ellipse at center,rgba(10,10,12,.55) 0%,rgba(10,10,12,.34) 45%,rgba(10,10,12,0) 72%)}
 .hero-kicker{font-size:.8rem;letter-spacing:.6em;color:#e8dcc4;margin-bottom:26px;text-shadow:0 1px 14px rgba(0,0,0,.7)}
 .hero-title{font-family:var(--serif);font-size:clamp(3rem,9vw,5.4rem);font-weight:700;letter-spacing:.32em;text-indent:.32em;
   text-shadow:0 2px 40px rgba(0,0,0,.6),0 1px 4px rgba(0,0,0,.45)}
-.hero-line{width:1px;height:64px;background:linear-gradient(#e8dcc4,transparent);margin:30px auto 30px}
-.hero-tag{font-weight:300;font-size:clamp(.95rem,2vw,1.15rem);letter-spacing:.12em;max-width:560px;margin:0 auto;text-shadow:0 1px 14px rgba(0,0,0,.7)}
+.hero-sale{font-family:var(--serif);font-size:clamp(1rem,2vw,1.3rem);letter-spacing:.18em;margin:10px 0 20px}
+.hero-price{display:flex;align-items:baseline;justify-content:center;gap:14px;margin-bottom:24px;color:#f4eddc}
+.hero-price span{font-size:.85rem;letter-spacing:.2em}
+.hero-price b{font-family:var(--serif);font-weight:500;font-size:clamp(2rem,5vw,3rem);line-height:1.3;letter-spacing:.04em}
+.hero-price small{font-family:var(--sans);font-size:1rem;font-weight:400;margin-left:8px}
+.hero-tag{font-weight:400;font-size:clamp(1rem,2vw,1.15rem);letter-spacing:.08em;max-width:560px;margin:0 auto;text-shadow:0 1px 14px rgba(0,0,0,.7)}
 .hero-addr{margin-top:22px;font-size:.8rem;letter-spacing:.28em;color:#d8d2c6;text-shadow:0 1px 12px rgba(0,0,0,.7)}
-.hero-cta{display:inline-block;margin-top:40px;border:1px solid #e8dcc4;color:#f4eddc;padding:13px 44px;letter-spacing:.34em;font-size:.85rem;transition:all .35s}
+.hero-actions{display:flex;justify-content:center;align-items:center;gap:24px;flex-wrap:wrap;margin-top:30px}
+.hero-cta{display:inline-block;border:1px solid #e8dcc4;color:#f4eddc;padding:13px 32px;letter-spacing:.2em;font-size:.9rem;transition:all .35s}
+.hero-secondary{display:inline-flex;align-items:center;gap:12px;min-height:48px;font-size:.9rem;letter-spacing:.1em;border-bottom:1px solid rgba(244,237,220,.55)}
+.hero-secondary::after{content:"↓"}
+.hero-actions a:focus-visible{outline:2px solid #f4eddc;outline-offset:5px}
+@media(max-width:560px){.hero-kicker{letter-spacing:.2em;font-size:.8rem}.hero-sale{letter-spacing:.12em}.hero-actions{gap:18px}.hero-addr{letter-spacing:.1em}.hero-inner{padding-top:100px}}
 .hero-cta:hover{background:#e8dcc4;color:var(--ink)}
 .scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;font-size:.65rem;letter-spacing:.4em;color:#d8d2c6;animation:bob 2.4s infinite ease-in-out}
 @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
@@ -107,7 +133,7 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 
 /* features */
 .features{background:var(--bone)}
-.feature-visual{position:relative;height:clamp(430px,62vw,720px);margin:54px calc(50% - 50vw) 0;overflow:hidden;
+.feature-visual{position:relative;height:clamp(340px,44vw,560px);margin:42px calc(50% - 50vw) 0;overflow:hidden;
   background:#1c2830;isolation:isolate;color:var(--white)}
 .feature-visual img{width:100%;height:100%;object-fit:cover;object-position:center 58%;transform:scale(1.16);will-change:transform}
 .feature-visual::after{content:"";position:absolute;inset:0;z-index:1;
@@ -118,19 +144,20 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .feature-copy small{display:block;margin-bottom:12px;color:#dfd1b6;font-size:.68rem;letter-spacing:.48em}
 .feature-copy h3{font-family:var(--serif);font-size:clamp(1.7rem,4vw,3rem);line-height:1.35;letter-spacing:.14em;font-weight:600}
 .feature-copy p{margin-top:17px;max-width:500px;font-weight:300;letter-spacing:.08em;color:rgba(255,253,249,.86)}
-.feat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;margin-top:54px}
-.feat{background:var(--white);border:1px solid var(--line);padding:42px 36px;position:relative;transition:transform .4s,box-shadow .4s}
-.feat:hover{transform:translateY(-4px);box-shadow:0 18px 40px -20px rgba(60,50,30,.25)}
+.features{padding:64px 0}
+.feat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:34px}
+.feat{border-top:1px solid var(--line);padding:24px 0 0;position:relative}
 .feat-num{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:2.2rem;color:var(--bronze);line-height:1}
-.feat h3{font-family:var(--serif);font-size:1.25rem;letter-spacing:.16em;margin:16px 0 12px}
-.feat p{color:var(--ink-soft);font-weight:300;font-size:.95rem}
+.feat h3{font-family:var(--serif);font-size:1.08rem;letter-spacing:.05em;margin:12px 0 8px}
+.feat p{color:var(--ink-soft);font-weight:400;font-size:1rem}
+@media(max-width:1000px){.feat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:720px){
-  .feature-visual{height:62svh;min-height:430px;margin-top:42px}
+  .feature-visual{height:420px;min-height:0;margin-top:32px}
   .feature-visual::after{background:linear-gradient(0deg,rgba(12,19,23,.82) 0%,rgba(12,19,23,.26) 66%,rgba(12,19,23,.08) 100%)}
   .feature-copy{left:24px;right:24px;bottom:34px}
   .feature-copy small{letter-spacing:.3em}
   .feature-copy p{font-size:.9rem}
-  .feat-grid{grid-template-columns:minmax(0,1fr)}
+  .features{padding:44px 0}.feat-grid{gap:22px 18px;margin-top:24px}.feat h3{font-size:1rem}.feat p{font-size:.9rem;line-height:1.85}
 }
 
 /* 室內空間：照片與配備依房間相伴，品牌細節以原生 details 收納 */
@@ -176,7 +203,7 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .room-highlights strong{display:block;color:var(--ink);font-weight:500;font-size:.88rem;letter-spacing:.06em;margin-bottom:3px}
 .room-details{margin-top:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .room-details summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px;
-  list-style:none;cursor:pointer;color:var(--bronze-deep);font-size:.8rem;letter-spacing:.14em;padding:12px 0}
+  list-style:none;cursor:pointer;color:var(--bronze-deep);font-size:.8rem;letter-spacing:.14em;padding:12px}
 .room-details summary::-webkit-details-marker{display:none}
 .room-details summary::after{content:"＋";font-size:1.1rem;flex-shrink:0}
 .room-details[open] summary::after{content:"－"}
@@ -188,6 +215,8 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .interior-archive{display:flex;align-items:center;justify-content:space-between;gap:24px;border-top:1px solid var(--line);padding-top:28px}
 .interior-archive p{font-size:.84rem;line-height:1.8;color:var(--ink-soft);font-weight:300}
 .interior-archive .interior-link{margin:0;flex-shrink:0}
+.archive-actions{display:flex;gap:20px;flex-wrap:wrap}
+.layout-note{margin:10px 0 0;color:var(--ink-soft);font-size:.875rem;line-height:1.8}
 @media(max-width:720px){
   .interior-heading{display:block}
   .interior-heading .sec-title{font-size:1.8rem;line-height:1.6;letter-spacing:.1em}
@@ -204,6 +233,9 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
   .room-index{gap:12px}.room-index span{font-size:1.6rem}
   .room-tagline{font-size:.95rem;margin-bottom:18px}
   .room-thumbs{gap:10px;margin-top:14px}
+  .room-thumbs figcaption{font-size:.8rem;letter-spacing:.02em}
+  .room-thumbs:has(>figure:only-child){grid-template-columns:minmax(0,1fr);max-width:180px}
+  .room-thumbs:has(>figure:nth-child(2):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
   .room-caption{font-size:.65rem;gap:8px}
   .room-photo--portrait{max-width:280px}
   .interior-archive{align-items:flex-start;flex-direction:column;gap:16px}
@@ -217,24 +249,29 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .amen-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin-top:54px}
 .amen-block h3{font-family:var(--serif);font-size:1.15rem;letter-spacing:.16em;font-weight:600;padding-bottom:14px;margin-bottom:22px;border-bottom:1px solid var(--line)}
 .tag-wall{display:flex;flex-wrap:wrap;gap:10px}
-.tag-wall span{background:var(--white);border:1px solid var(--line);padding:9px 16px;font-size:.85rem;font-weight:300;letter-spacing:.12em;color:var(--ink-soft);transition:border-color .3s,color .3s}
-.tag-wall span:hover{border-color:var(--bronze);color:var(--bronze-deep)}
+.tag-wall span{background:var(--white);border:1px solid var(--line);padding:9px 16px;font-size:.85rem;font-weight:300;letter-spacing:.12em;color:var(--ink-soft)}
 @media(max-width:820px){.amen-grid{grid-template-columns:minmax(0,1fr);gap:38px}}
 
 /* invest：上半部以投資意象照片鋪底，暖白漸層向下過渡，避免干擾數據表閱讀 */
 .invest{position:relative;text-align:center;background:
   linear-gradient(180deg,rgba(247,244,238,.68) 0%,rgba(247,244,238,.84) 34%,rgba(247,244,238,.96) 66%,var(--bone) 88%),
-  url("media/investment-bg.jpg") center top/100% auto no-repeat,
+  image-set(url("media/optimized/investment-bg-640.webp") 1x,url("media/optimized/investment-bg-1140.webp") 2x) center top/100% auto no-repeat,
   var(--bone)}
-.invest-cards{display:flex;justify-content:center;gap:0;margin:52px auto 30px;max-width:860px;background:var(--white);border:1px solid var(--line)}
-.icard{flex:1;padding:40px 18px;border-left:1px solid var(--line)}
+.invest-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:36px auto 20px;max-width:900px;background:var(--white);border:1px solid var(--line)}
+.icard{padding:30px 16px;border-left:1px solid var(--line)}
 .icard:first-child{border-left:none}
-.icard .lab{font-size:.75rem;letter-spacing:.3em;color:var(--ink-soft);margin-bottom:10px}
+.icard .lab{font-size:.875rem;letter-spacing:.08em;color:var(--ink-soft);margin-bottom:10px}
 .icard .val{font-family:var(--serif);font-size:clamp(1.4rem,3vw,2rem);font-weight:600;color:var(--bronze-deep);letter-spacing:.04em}
 .icard .val small{font-size:.85rem;color:var(--ink-soft);font-weight:400;letter-spacing:.1em}
-@media(max-width:720px){.invest-cards{flex-direction:column}.icard{border-left:none;border-top:1px solid var(--line)}.icard:first-child{border-top:none}}
+@media(max-width:720px){.invest-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.icard{padding:24px 12px}.icard:nth-child(odd){border-left:0}.icard:nth-child(n+3){border-top:1px solid var(--line)}}
 @media(max-width:720px){.invest{background-size:auto,auto 620px;background-position:center top,center top}}
-.invest-claim{font-family:var(--serif);font-size:clamp(1.05rem,2.2vw,1.35rem);font-weight:600;letter-spacing:.24em;color:var(--bronze-deep);margin:0 0 44px}
+.invest-claim{font-family:var(--serif);font-size:clamp(1.05rem,2.2vw,1.35rem);font-weight:500;letter-spacing:.12em;color:var(--bronze-deep);margin:30px 0 0}
+.invest-note{max-width:900px;margin:0 auto;text-align:left;color:var(--ink-soft);font-size:.875rem;line-height:1.85}
+.market-reference{max-width:900px;margin:42px auto 0;padding-top:26px;border-top:1px solid var(--line);text-align:left}
+.market-reference h3{font-family:var(--serif);font-size:1.25rem;font-weight:500;letter-spacing:.12em;color:var(--ink)}
+.market-reference-intro{margin:8px 0 22px;font-size:.875rem;color:var(--ink-soft)}
+.comp-table td small{display:block;font-family:var(--sans);font-size:.75rem;font-weight:400;color:var(--ink-soft)}
+.invest .interior-link{margin-top:28px}
 
 /* 實價登錄比較表 */
 .comp-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:900px;margin:0 auto 20px}
@@ -248,8 +285,20 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .comp-table tr.self td:first-child{box-shadow:inset 3px 0 0 var(--bronze);font-weight:600}
 .comp-table tr.self .num{color:var(--bronze-deep);font-weight:600}
 .comp-note{max-width:900px;margin:0 auto 30px;text-align:left;font-size:.75rem;line-height:1.9;font-weight:300;letter-spacing:.06em;color:var(--ink-soft)}
-.comp-swipe{display:none;margin:-4px 0 14px;font-size:.75rem;color:var(--bronze-deep);letter-spacing:.12em}
-@media(max-width:720px){.comp-swipe{display:block}}
+.comp-cards{display:none}
+@media(max-width:720px){
+  .has-cards .comp-scroll{display:none}
+  .has-cards .comp-cards{display:grid;gap:16px;margin-bottom:22px}
+  .comp-card{padding:22px 20px;background:var(--white);border:1px solid var(--line)}
+  .comp-card.self{border-left:3px solid var(--bronze);background:var(--bone)}
+  .comp-card h4{font-family:var(--serif);font-size:1.08rem;font-weight:600;line-height:1.6;overflow-wrap:anywhere}
+  .comp-card-kind{margin-top:6px;font-size:.82rem;color:var(--ink-soft)}
+  .comp-card-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin:18px 0;color:var(--bronze-deep);font-family:var(--serif);font-size:1.65rem;font-weight:500}
+  .comp-card-price small{font-family:var(--sans);font-size:.75rem;font-weight:400;color:var(--ink-soft)}
+  .comp-card dl{display:grid;grid-template-columns:1fr 1fr;gap:14px;border-top:1px solid var(--line);padding-top:14px}
+  .comp-card dt{font-size:.75rem;color:var(--ink-soft);margin-bottom:4px}
+  .comp-card dd{font-family:var(--serif);font-size:1rem}
+}
 
 /* location */
 .location{background:var(--white)}
@@ -268,6 +317,23 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .unit-fact:first-child{border-left:0}
 .unit-fact b{display:block;font-family:var(--serif);font-size:1.45rem;color:var(--bronze-deep);letter-spacing:.08em}
 .unit-fact span{display:block;margin-top:6px;font-size:.75rem;color:var(--ink-soft);letter-spacing:.18em}
+.unit-management{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px;padding:18px 4px 0;color:var(--ink-soft);font-size:.9rem;letter-spacing:.06em}
+.unit-management strong{font-weight:500;color:var(--ink)}
+.building-details{margin-top:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.building-details summary{display:flex;justify-content:space-between;align-items:center;gap:18px;min-height:64px;padding:18px 12px;cursor:pointer;list-style:none;color:var(--bronze-deep);font-size:1rem;letter-spacing:.08em}
+.building-details summary::-webkit-details-marker{display:none}
+.building-details summary::after{content:"＋";flex-shrink:0;font-size:1.15rem}
+.building-details[open] summary::after{content:"－"}
+.building-details summary small{display:block;margin-top:5px;color:var(--ink-soft);font-size:.8rem;letter-spacing:.06em}
+.building-details .spec-table{margin-top:0;padding-bottom:18px}
+/* 互動提示只用於可展開控制項；色彩與內框變化不推動版面。 */
+.room-details summary,.building-details summary{transition:background-color .2s,color .2s,box-shadow .2s}
+.room-details summary:active,.building-details summary:active,
+.room-details summary:focus-visible,.building-details summary:focus-visible{background:var(--bone-deep);color:var(--ink);box-shadow:inset 2px 0 0 var(--bronze-deep)}
+.room-details summary:focus-visible,.building-details summary:focus-visible{outline:2px solid var(--bronze-deep);outline-offset:4px}
+@media(hover:hover){
+  .room-details summary:hover,.building-details summary:hover{background:var(--bone-deep);color:var(--ink);box-shadow:inset 2px 0 0 var(--bronze-deep)}
+}
 .spec-table{margin-top:54px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 60px}
 .spec-row{display:flex;justify-content:space-between;gap:20px;padding:15px 4px;border-bottom:1px solid var(--line);font-size:.95rem}
 .spec-row dt{color:var(--ink-soft);letter-spacing:.2em;font-weight:400;flex-shrink:0}
@@ -317,8 +383,18 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .lightbox{position:fixed;inset:0;z-index:99;background:rgba(15,14,12,.94);display:none;align-items:center;justify-content:center;padding:68px 76px 28px}
 .lightbox.open{display:flex}
 .lightbox-shell{width:min(100%,1200px);height:min(82vh,900px);display:flex;flex-direction:column;min-width:0}
-.lightbox-content{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;touch-action:pan-y}
+.lightbox-content{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;position:relative}
+.lightbox-content[data-kind="video"]{touch-action:auto}
 .lightbox-content img,.lightbox-content video{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.lightbox-content img{user-select:none;-webkit-user-drag:none;transform-origin:center;cursor:zoom-in}
+.lightbox-content.zoomed img{cursor:grab}
+.lightbox-content.zoomed:active img{cursor:grabbing}
+.lightbox-tools{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding-top:12px;color:var(--white)}
+.lightbox-tools[hidden]{display:none}
+.lightbox-tools button,.lightbox-tools a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:6px 10px;border:1px solid rgba(255,255,255,.3);background:transparent;color:inherit;font:inherit;font-size:.8rem;cursor:pointer}
+.lightbox-tools button:disabled{opacity:.4;cursor:default}
+.lightbox-tools button:focus-visible,.lightbox-tools a:focus-visible{outline:2px solid #cdb684;outline-offset:2px}
+.lightbox-tools output{min-width:42px;text-align:center;font-size:.75rem}
 .lightbox-meta{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:14px;color:#fffdf9}
 .lightbox-caption{font-size:.88rem;letter-spacing:.1em;font-weight:300;line-height:1.7}
 .lightbox-counter{flex-shrink:0;color:#d8ccb5;font-family:"Cormorant Garamond",serif;font-size:1.1rem;letter-spacing:.16em}
@@ -329,7 +405,7 @@ header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(247,244,238,.8
 .lightbox-nav[hidden]{display:none}
 body.lightbox-open{overflow:hidden}
 .strip-item:focus-visible,.gallery-all:focus-visible,.map3d:focus-visible,.interior-stage:focus-visible,.lightbox-close:focus-visible,.lightbox-nav:focus-visible,.frow input:focus-visible,.frow select:focus-visible,.submit-btn:focus-visible,.agree button:focus-visible,.nav a:focus-visible{outline:2px solid #cdb684;outline-offset:3px}
-.room-photo:focus-visible,.interior-link:focus-visible,.room-details summary:focus-visible{outline:2px solid var(--bronze);outline-offset:4px}
+.room-photo:focus-visible,.interior-link:focus-visible{outline:2px solid var(--bronze);outline-offset:4px}
 @media(max-width:720px){
   .lightbox{padding:62px 10px 12px}
   .lightbox-shell{width:100%;height:calc(100dvh - 74px)}
@@ -347,16 +423,19 @@ body.lightbox-open{overflow:hidden}
 .booking .sec-sub{color:#b7b1a4}
 .form-card{max-width:640px;margin:56px auto 0}
 .frow{display:flex;align-items:center;gap:18px;border-bottom:1px solid rgba(247,244,238,.25);padding:20px 4px}
-.frow label{flex-shrink:0;width:96px;letter-spacing:.35em;font-size:.92rem;color:#e2dccf}
+.frow label{flex-shrink:0;width:104px;letter-spacing:.12em;font-size:.92rem;color:#e2dccf}
+.frow label small{display:block;font-size:.75rem;letter-spacing:.08em;color:#b7b1a4}
 .frow input,.frow select{flex:1;background:transparent;border:0;outline:0;color:var(--white);font-family:var(--sans);font-size:1rem;font-weight:300;letter-spacing:.06em;padding:6px 2px}
 .frow select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' stroke='%23cdb684' fill='none' stroke-width='1.5'/></svg>");background-repeat:no-repeat;background-position:right 6px center;cursor:pointer}
 .frow select option{color:var(--ink);background:var(--bone)}
-.frow input::placeholder{color:rgba(226,220,207,.4)}
+.frow input::placeholder{color:#b7b1a4}
+.booking-contact-note{font-size:.875rem;color:#d2c9b9;margin-top:18px;line-height:1.8}
 .agree{display:flex;align-items:flex-start;gap:12px;padding:26px 4px 10px;font-size:.9rem;color:#e2dccf}
 .agree input{width:17px;height:17px;margin-top:4px;accent-color:var(--bronze);cursor:pointer}
 .agree button{background:none;border:0;color:#cdb684;text-decoration:underline;cursor:pointer;font-size:.9rem;font-family:var(--sans);letter-spacing:.05em;padding:0}
 .privacy-text{display:none;font-size:.8rem;color:#b7b1a4;font-weight:300;padding:14px 4px 0;line-height:1.9}
 .privacy-text.open{display:block}
+#bookingSchedule{white-space:pre-line}
 .submit-row{text-align:right;margin-top:34px}
 .submit-btn{background:linear-gradient(160deg,#f4eddc,#cdb684);color:var(--ink);border:0;padding:15px 52px;font-size:.95rem;letter-spacing:.4em;text-indent:.4em;font-family:var(--sans);font-weight:500;cursor:pointer;transition:opacity .3s}
 .submit-btn:hover{opacity:.85}
@@ -364,12 +443,20 @@ body.lightbox-open{overflow:hidden}
 .form-msg{margin-top:22px;font-size:.92rem;letter-spacing:.1em;min-height:1.5em}
 .form-msg.ok{color:#cfe3b8}
 .form-msg.err{color:#e8a794}
+.booking-receipt{margin-top:24px;padding:24px;border:1px solid #a59a82;color:var(--bone);background:rgba(247,244,238,.04)}
+.booking-receipt[hidden]{display:none}
+.booking-receipt h3{font-family:var(--serif);font-size:1.2rem;font-weight:500;letter-spacing:.08em;margin-bottom:12px}
+.booking-receipt p{font-size:.9rem;line-height:1.9;white-space:pre-line}
+.booking-receipt p+p{margin-top:12px;color:#d2c9b9;font-size:.85rem}
+.schedule-status{font-size:.85rem;line-height:1.8;color:#d2c9b9;margin-top:16px}
+.schedule-status:empty{display:none}
+.frow input[aria-invalid="true"]{outline:1px solid #e8a794;outline-offset:4px}
 /* 防機器人誘餌欄位：用裁切隱藏，不再用 left:-9999px（那會多出一個視窗外的元素） */
 .honeypot{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media(max-width:560px){.frow{flex-direction:column;align-items:flex-start;gap:6px}.frow label{width:auto}.frow input,.frow select{width:100%}}
 
 /* footer */
-footer{background:#171512;color:#8d8779;padding:44px 24px;text-align:center;font-size:.78rem;letter-spacing:.14em;font-weight:300}
+footer{background:#171512;color:#b7b1a4;padding:36px 24px;text-align:center;font-size:.8rem;letter-spacing:.08em;font-weight:400}
 footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-size:1rem;margin-bottom:12px}
 </style>
 </head>
@@ -380,13 +467,16 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
     <a class="brand" href="#top">何必館<small>NEIHU · TAIPEI</small></a>
     <div class="nav-links">
       <a href="#feature">物件特色</a>
-      <a href="#invest">投資價值</a>
       <a href="#interior">空間與配備</a>
       <a href="#location">區位機能</a>
       <a href="#specs">建築資訊</a>
       <a href="#amenity">社區公設</a>
+      <a href="#invest">價格與租金</a>
     </div>
-    <a class="nav-cta" href="#booking">預約看屋</a>
+    <div class="nav-actions"><button class="nav-toggle" id="mobileNavToggle" type="button" aria-expanded="false" aria-controls="mobileNav">導覽</button><a class="nav-cta" href="#booking">預約看屋</a></div>
+  </nav>
+  <nav class="mobile-nav" id="mobileNav" aria-label="手機章節導覽" hidden>
+    <a href="#feature">物件特色</a><a href="#interior">空間與配備</a><a href="#location">區位機能</a><a href="#specs">建築資訊</a><a href="#amenity">社區公設</a><a href="#invest">價格與租金</a>
   </nav>
 </header>
 
@@ -396,10 +486,11 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
   <div class="hero-inner">
     <div class="hero-kicker">內湖站 2 分鐘 · 內湖科技園區生活圈</div>
     <h1 class="hero-title">何必館</h1>
-    <div class="hero-line"></div>
-    <p class="hero-tag">步行約 2 分鐘，捷運內湖站與 CITYLINK 就在轉角。<br>16.25 坪一房一廳，11 樓大面採光、面山無遮蔽。</p>
+    <p class="hero-sale">11 樓面山採光宅出售</p>
+    <div class="hero-price"><span>開價</span><b data-price-wan>1,980<small>萬</small></b></div>
+    <p class="hero-tag">16.25 坪，光線與生活一起舒展。<br>開放式客廳與臥室配置，捷運與 CITYLINK 就在轉角。</p>
     <div class="hero-addr">台北市內湖區・內湖路二段 428 號</div>
-    <a class="hero-cta" href="#booking">預約看屋</a>
+    <div class="hero-actions"><a class="hero-cta" href="#booking">預約看屋</a><a class="hero-secondary" href="#interior">先看室內實景</a></div>
   </div>
   <div class="scroll-hint">SCROLL</div>
 </section>
@@ -407,10 +498,10 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
 <!-- ═══════════ STATS ═══════════ -->
 <div class="stats">
   <div class="stats-grid">
-    <div class="stat"><b><i class="cnum" data-to="16.25" data-dec="2">16.25</i><small class="stat-unit"> 坪</small></b><span>一房一廳</span></div>
+    <div class="stat"><b data-price-wan>1,980<small class="stat-unit"> 萬</small></b><span>本戶開價</span></div>
+    <div class="stat"><b><i class="cnum" data-to="16.25" data-dec="2">16.25</i><small class="stat-unit"> 坪</small></b><span>權狀面積</span></div>
     <div class="stat"><b><i class="cnum" data-to="2" data-dec="0">2</i><small class="stat-unit"> 分鐘</small></b><span>步行捷運內湖站・CITYLINK</span></div>
-    <div class="stat"><b><i class="cnum" data-to="36000" data-dec="0" data-sep="1">36,000</i></b><span>月租金行情（NT$）</span></div>
-    <div class="stat"><b><small class="stat-unit">屋齡僅</small><i class="cnum" data-to="7" data-dec="0">7</i><small class="stat-unit">年</small></b><span>2018 年第四季完工</span></div>
+    <div class="stat"><b><i class="cnum" data-to="11" data-dec="0">11</i><small class="stat-unit"> 樓</small></b><span>面山・大面採光</span></div>
   </div>
 </div>
 
@@ -420,97 +511,33 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
     <div class="reveal">
       <div class="eyebrow">Highlights</div>
       <h2 class="sec-title">物件特色</h2>
-      <p class="sec-sub">離捷運近、採光面大、屋況新，兼顧日常生活與資產運用彈性。</p>
+      <p class="sec-sub">近捷運的便利，大面採光的日常，還有已安排好的收納與配備。</p>
     </div>
-    <figure class="feature-visual reveal" id="featureVisual">
-      <img src="media/內湖科技園區.jpeg" alt="內湖科技園區與台北城市景觀" loading="lazy" decoding="async">
-      <figcaption class="feature-copy">
-        <small>NEIHU TECHNOLOGY PARK</small>
-        <h3>城市效率與山景日常<br>在內湖恰好相遇</h3>
-        <p>捷運內湖站步行約 2 分鐘，串聯內湖科技園區與南軟科技園區通勤圈。</p>
-      </figcaption>
-    </figure>
     <div class="feat-grid">
       <div class="feat reveal">
         <div class="feat-num">01</div>
-        <h3>內湖科技園區生活圈</h3>
-        <p>緊鄰內湖科技園區通勤廊帶，科技與媒體產業工作人口帶來穩定而長期的租賃需求，一房一廳的格局正是內科租客的首選型態。</p>
+        <h3>捷運與商場在身旁</h3>
+        <p>步行約 2 分鐘到內湖站與 CITYLINK，通勤、採買更從容。</p>
       </div>
       <div class="feat reveal">
         <div class="feat-num">02</div>
-        <h3>捷運 2 分鐘 × CITYLINK</h3>
-        <p>距捷運內湖站 1 號出口約 200 公尺、步行約 2 分鐘；CITYLINK 內湖店（含蔦屋書店）近在咫尺，下樓即是完整商圈。</p>
+        <h3>11 樓面山採光</h3>
+        <p>主要採光面窗景無遮蔽，開放式空間延伸光線與生活動線。</p>
       </div>
       <div class="feat reveal">
         <div class="feat-num">03</div>
-        <h3>低總價・租賃需求穩定</h3>
-        <p>月租金行情 NT$36,000，低總價、低持有門檻。鄰近內科通勤圈與捷運站，適合重視出租需求與資產彈性的首購、置產族。</p>
+        <h3>裝潢與收納齊備</h3>
+        <p>2018 年第四季完工，到頂系統收納、廚衛設備與獨立工作陽台。</p>
       </div>
       <div class="feat reveal">
         <div class="feat-num">04</div>
-        <h3>11 樓面山・大面採光</h3>
-        <p>本戶位於 11 樓，主要採光面窗景無遮蔽、面山；目前空屋、屋況新，可隨時安排看屋與交屋。</p>
+        <h3>月租行情參考 36,000 元</h3>
+        <p>一只皮箱，即可入住。</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ INVEST ═══════════ -->
-<section class="invest" id="invest">
-  <div class="wrap reveal">
-    <div class="eyebrow">Investment</div>
-    <h2 class="sec-title">投資價值</h2>
-    <p class="sec-sub" style="margin:0 auto">用開價、租金行情與周邊同型產品，評估進場門檻與出租潛力。</p>
-    <div class="invest-cards">
-      <div class="icard"><div class="lab">開　價</div><div class="val" id="priceVal">請洽詢</div></div>
-      <div class="icard"><div class="lab">月租金行情</div><div class="val" id="rentVal">36,000<small>／月</small></div></div>
-      <div class="icard"><div class="lab">年租金收入</div><div class="val" id="annualVal">43.2<small> 萬</small></div></div>
-      <div class="icard"><div class="lab">粗投報率</div><div class="val" id="yieldVal">—</div></div>
-    </div>
-    <p class="invest-claim">低總價進場・內科租賃需求支撐</p>
-
-    <div class="comp-scroll">
-      <table class="comp-table">
-        <thead>
-          <tr><th>社區（捷運站）</th><th>型態</th><th>坪數</th><th>總價</th><th>單價</th></tr>
-        </thead>
-        <tbody>
-          <tr class="self">
-            <td>何必館・本案（內湖站）</td>
-            <td>成屋・屋齡僅 7 年</td>
-            <td class="num">16.25 坪</td>
-            <td class="num">1,980 萬</td>
-            <td class="num">約 121.8 萬/坪</td>
-          </tr>
-          <tr>
-            <td>文心移動光城（港墘站）</td>
-            <td>成屋・2010/11 完工<br>屋齡約 15 年</td>
-            <td class="num">16.65 坪</td>
-            <td class="num">2,240 萬</td>
-            <td class="num">134.53 萬/坪</td>
-          </tr>
-          <tr>
-            <td>碧湖雲景（港墘站）</td>
-            <td>預售</td>
-            <td class="num">16.42 坪</td>
-            <td class="num">2,490 萬</td>
-            <td class="num">151.64 萬/坪</td>
-          </tr>
-          <tr>
-            <td>EAT國際館（捷運共構宅套房參考）</td>
-            <td>成屋・屋齡約 20 年</td>
-            <td class="num">15.85 坪</td>
-            <td class="num">2,600 萬</td>
-            <td class="num">164.04 萬/坪</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="comp-swipe" aria-hidden="true">← 左右滑動查看完整比較 →</p>
-    <p class="comp-note">＊比較物件為 115 年 5–6 月實價登錄／預售揭露之成交資訊，僅供參考；<br>各物件屋齡、樓層、型態與區位條件不同，實際價值請以個案為準。EAT 國際館為捷運共構宅套房參考案例。資料來源：內政部實價登錄。</p>
-
-  </div>
-</section>
 
 <!-- ═══════════ INTERIOR & EQUIPMENT ═══════════ -->
 <section class="interior" id="interior">
@@ -539,7 +566,7 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
         <div class="room-copy reveal">
           <div class="room-index"><span>01</span> Living &amp; Bedroom</div>
           <h3 id="livingTitle">客廳・臥室</h3>
-          <p class="room-tagline">光線與收納，讓生活舒展。</p>
+          <p class="room-tagline">開放式配置，讓光線與生活舒展。</p>
           <ul class="room-highlights">
             <li><strong>大面採光，自在切換日夜</strong>11 樓面山窗景，搭配一布一紗電動窗簾；100 吋投影布幕，讓居家時光多一種享受。</li>
             <li><strong>收得整齊，用得從容</strong>到頂衣櫃、懸浮式鏡櫃化妝桌與可掀合吧台桌，兼顧收納、梳妝和日常用餐。</li>
@@ -625,9 +652,13 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       </article>
     </div>
     <div class="interior-archive reveal">
-      <p>想再看仔細一點？<br>完整相簿收錄室內實景與家具配置概念示意。</p>
-      <button class="interior-link" type="button" data-interior-all>查看完整室內相簿</button>
+      <p>想再看仔細一點？<br>室內實拍與家具配置概念圖，分開查看。</p>
+      <div class="archive-actions">
+        <button class="interior-link" type="button" data-interior-all>查看完整室內相簿</button>
+        <button class="interior-link" type="button" data-concept-plan>查看家具配置概念圖</button>
+      </div>
     </div>
+    <p class="layout-note">概念圖非現況格局或丈量圖，不作門窗與設備位置依據；現況請參閱本戶實拍。</p>
   </div>
 </section>
 
@@ -639,6 +670,14 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <h2 class="sec-title">區位機能</h2>
       <p class="sec-sub">台北市內湖區內湖路二段 428 號<br>捷運、商場、公園與科技園區，串起完整的內湖生活圈。</p>
     </div>
+    <figure class="feature-visual reveal" id="featureVisual">
+      <img src="media/內湖科技園區.jpeg" srcset="media/optimized/內湖科技園區-640.webp 640w, media/optimized/內湖科技園區-1280.webp 1280w" sizes="100vw" alt="內湖科技園區與台北城市景觀，非本戶窗景" loading="lazy" decoding="async">
+      <figcaption class="feature-copy">
+        <small>NEIHU TECHNOLOGY PARK</small>
+        <h3>城市效率與山景日常<br>在內湖恰好相遇</h3>
+        <p>內湖科技園區・南軟科技園區通勤圈。<br>區域景觀照片，非本戶窗景。</p>
+      </figcaption>
+    </figure>
     <div class="loc-grid">
       <ul class="loc-list reveal">
         <li><span class="tag">捷運</span>內湖站 1 號出口 約 200 公尺（步行約 2 分鐘）</li>
@@ -676,7 +715,10 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <div class="unit-fact"><b>住家用</b><span>主要用途</span></div>
       <div class="unit-fact"><b>隨時</b><span>可交屋時間</span></div>
     </div>
-    <dl class="spec-table reveal">
+    <div class="unit-management reveal"><span>管理費 <strong>170 元／坪／月</strong></span><span>年繳享 95 折</span></div>
+    <details class="building-details reveal">
+      <summary><span>查看完整本戶與建築資訊<small>坪數明細・產權登記・建築團隊</small></span></summary>
+    <dl class="spec-table">
       <div class="spec-row"><dt>案　名</dt><dd>何必館</dd></div>
       <div class="spec-row"><dt>地　址</dt><dd>台北市內湖區內湖路二段428號</dd></div>
       <div class="spec-row"><dt>建設公司</dt><dd>大磊建築</dd></div>
@@ -689,7 +731,8 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <div class="spec-row"><dt>本戶層次</dt><dd>第 11 層</dd></div>
       <div class="spec-row"><dt>棟　戶</dt><dd>2 棟・72 戶住家・3 戶店面</dd></div>
       <div class="spec-row"><dt>主要用途</dt><dd>住家用</dd></div>
-      <div class="spec-row"><dt>權狀面積</dt><dd>16.25 坪・一房一廳</dd></div>
+      <div class="spec-row"><dt>權狀面積</dt><dd>16.25 坪</dd></div>
+      <div class="spec-row"><dt>空間配置</dt><dd>開放式客廳・臥室<br>廚房・衛浴・工作陽台</dd></div>
       <div class="spec-row"><dt>主建物</dt><dd>9.36 坪</dd></div>
       <div class="spec-row"><dt>附屬建物</dt><dd>陽台 0.93 坪</dd></div>
       <div class="spec-row"><dt>共有部分</dt><dd>5.96 坪</dd></div>
@@ -700,10 +743,12 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
       <div class="spec-row"><dt>大樓座向</dt><dd>朝東北</dd></div>
       <div class="spec-row"><dt>基　地</dt><dd>192 坪</dd></div>
       <div class="spec-row"><dt>建蔽率</dt><dd>65.00%</dd></div>
-      <div class="spec-row"><dt>公設比</dt><dd>35.00%（本戶）</dd></div>
+      <div class="spec-row"><dt>公設比</dt><dd>36.68%（依本戶坪數計算）</dd></div>
+      <div class="spec-row"><dt>管理費</dt><dd>170 元／坪／月<br>年繳享 95 折</dd></div>
       <div class="spec-row"><dt>國小學區</dt><dd>碧湖國小</dd></div>
       <div class="spec-row"><dt>國中學區</dt><dd>內湖國中</dd></div>
     </dl>
+    </details>
   </div>
 </section>
 
@@ -744,11 +789,77 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
   </div>
 </section>
 
+<!-- ═══════════ INVEST ═══════════ -->
+<section class="invest" id="invest">
+  <div class="wrap reveal">
+    <div class="eyebrow">Investment</div>
+    <h2 class="sec-title">開價與租金參考</h2>
+    <p class="sec-sub" style="margin:0 auto">自住的日常，置產的評估。<br>從開價與租金行情參考，看見自住與未來出租的彈性。</p>
+    <div class="invest-cards">
+      <div class="icard"><div class="lab">本戶開價</div><div class="val" id="priceVal" data-price-wan>1,980<small> 萬</small></div></div>
+      <div class="icard"><div class="lab">目前月租行情參考</div><div class="val" id="marketRentVal">36,000<small> 元</small></div></div>
+      <div class="icard"><div class="lab">年租金試算</div><div class="val" id="annualVal">43.2<small> 萬</small></div></div>
+      <div class="icard"><div class="lab">行情毛投報試算</div><div class="val" id="yieldVal">2.18<small> %</small></div></div>
+    </div>
+    <p class="invest-note">月租 36,000 元為目前租金行情參考。年租金與毛投報率以全年出租 12 個月及目前開價試算，未扣除稅費、管理、修繕與空置等成本，不代表未來收益保證。</p>
+    <p class="invest-claim">自住舒適，保留未來出租的彈性。</p>
+
+    <div class="market-reference" role="region" aria-labelledby="marketReferenceTitle">
+      <h3 id="marketReferenceTitle">成交案例參考</h3>
+      <p class="market-reference-intro">本戶開價與不同社區成交資料，分別列示。</p>
+    <div class="comp-scroll">
+      <table class="comp-table">
+        <thead>
+          <tr><th>社區（捷運站）</th><th>型態</th><th>坪數</th><th>總價／性質</th><th>單價</th></tr>
+        </thead>
+        <tbody>
+          <tr class="self">
+            <td>何必館・本案（內湖站）</td>
+            <td>成屋・屋齡僅 7 年</td>
+            <td class="num">16.25 坪</td>
+            <td class="num"><span data-price-text>1,980 萬</span><small>本戶開價</small></td>
+            <td class="num">約 121.8 萬/坪</td>
+          </tr>
+          <tr>
+            <td>文心移動光城（港墘站）</td>
+            <td>成屋・2010/11 完工<br>屋齡約 15 年</td>
+            <td class="num">16.65 坪</td>
+            <td class="num">2,240 萬<small>案例成交價</small></td>
+            <td class="num">134.53 萬/坪</td>
+          </tr>
+          <tr>
+            <td>碧湖雲景（港墘站）</td>
+            <td>預售</td>
+            <td class="num">16.42 坪</td>
+            <td class="num">2,490 萬<small>預售成交價</small></td>
+            <td class="num">151.64 萬/坪</td>
+          </tr>
+          <tr>
+            <td>EAT國際館（捷運共構宅套房參考）</td>
+            <td>成屋・屋齡約 20 年</td>
+            <td class="num">15.85 坪</td>
+            <td class="num">2,600 萬<small>案例成交價</small></td>
+            <td class="num">164.04 萬/坪</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="comp-cards" id="comparisonCards"></div>
+    <p class="comp-note">案例為 115 年 5–6 月實價登錄／預售揭露資料。本戶列示為開價，並非成交價。案例跨捷運站、屋齡及成屋／預售型態，不能直接據此判定本戶價格高低。EAT 國際館為跨區捷運共構宅套房參考。資料來源：內政部實價登錄。</p>
+    </div>
+    <a class="interior-link" href="#booking">選擇看屋時段</a>
+
+  </div>
+</section>
+
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="照片與影片預覽">
   <button class="lightbox-close" id="lbClose" type="button" aria-label="關閉預覽">✕</button>
   <button class="lightbox-nav lightbox-prev" id="lbPrev" type="button" aria-label="上一張" hidden>‹</button>
   <div class="lightbox-shell">
     <div class="lightbox-content" id="lbContent"></div>
+    <div class="lightbox-tools" id="lbTools" aria-label="照片縮放工具" hidden>
+      <button type="button" id="lbZoomOut" aria-label="縮小照片">−</button><output id="lbZoomLabel" aria-label="縮放比例">100%</output><button type="button" id="lbZoomIn" aria-label="放大照片">＋</button><button type="button" id="lbZoomReset">適合畫面</button><a id="lbOriginal" target="_blank" rel="noopener">查看原圖 ↗</a>
+    </div>
     <div class="lightbox-meta" aria-live="polite">
       <p class="lightbox-caption" id="lbCaption"></p>
       <span class="lightbox-counter" id="lbCounter"></span>
@@ -763,69 +874,75 @@ footer .fbrand{font-family:var(--serif);letter-spacing:.4em;color:#cdb684;font-s
     <div class="reveal" style="text-align:center">
       <div class="eyebrow">Reservation</div>
       <h2 class="sec-title">預約看屋</h2>
-      <p class="sec-sub" style="margin:0 auto">留下資料並選擇時段，將由專人與您確認。<br>週末場次：9/6（日）、9/12（六）14:00、15:00、16:00，每場一小時、限 1 組。<br>平日場次：9/11（五）12:00 – 13:00，限 1 組。<br>時間不合也沒關係，選擇「其他時間」再另行協調。</p>
+      <p class="sec-sub" id="bookingSchedule" style="margin:0 auto">請選擇下方可預約日期與時段；其他時間可另行協調。</p>
+      <p class="booking-contact-note">填寫後將以電話、簡訊或您提供的 LINE 聯繫確認；收到確認後，再依約到場。</p>
     </div>
     <form class="form-card reveal" id="bookForm" novalidate>
-      <div class="frow"><label for="fName">姓　　名</label><input id="fName" name="name" type="text" autocomplete="name" required></div>
-      <div class="frow"><label for="fTitle">稱　　謂</label>
-        <select id="fTitle" name="title"><option value="先生">先生</option><option value="小姐">小姐</option></select>
-      </div>
-      <div class="frow"><label for="fPhone">聯絡電話</label><input id="fPhone" name="phone" type="tel" autocomplete="tel" placeholder="09xx-xxx-xxx" required></div>
-      <div class="frow"><label for="fEmail">電子信箱</label><input id="fEmail" name="email" type="email" autocomplete="email" required></div>
+      <div class="frow"><label for="fName">姓名<small>必填</small></label><input id="fName" name="name" type="text" autocomplete="name" maxlength="100" placeholder="請填寫姓名" required></div>
+      <div class="frow"><label for="fPhone">聯絡電話<small>必填</small></label><input id="fPhone" name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder="請填手機或市話" required></div>
+      <div class="frow"><label for="fLineId">LINE ID<small>選填</small></label><input id="fLineId" name="lineId" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="請填 LINE ID"></div>
       <div class="frow"><label for="fDate">看屋日期</label><select id="fDate" name="date"></select></div>
       <div class="frow"><label for="fSlot">時　　段</label><select id="fSlot" name="slot"></select></div>
+      <div class="frow" id="preferredTimeRow" hidden><label for="fPreferredTime">希望看屋時間<small>選填</small></label><input id="fPreferredTime" name="preferredTime" type="text" maxlength="200" placeholder="例如：週三中午 12:00–13:00" disabled></div>
+      <p class="schedule-status" id="scheduleStatus" role="status"></p>
       <input class="honeypot" type="text" name="company" tabindex="-1" autocomplete="off">
       <div class="agree">
-        <input type="checkbox" id="fAgree" required>
-        <span>我同意 <button type="button" id="privacyToggle">個資告知聲明事項</button></span>
+        <input type="checkbox" id="fAgree" name="privacyConsent" aria-labelledby="agreementLabel" required>
+        <span id="agreementLabel">我已閱讀並同意 <button type="button" id="privacyToggle" aria-expanded="false" aria-controls="privacyText">個資告知聲明事項</button>（必填）</span>
       </div>
       <div class="privacy-text" id="privacyText">
-        您所填寫之個人資料（姓名、稱謂、電話、電子信箱）僅供本物件看屋預約之確認與聯繫，
-        不會提供予任何第三方，亦不作行銷以外之其他用途；於本物件銷售結束後即予刪除。
-        您得隨時來信要求查詢、更正或刪除您的個人資料。
+        您提供的姓名、電話、LINE ID（選填）及看屋時間資訊，僅用於本戶看屋預約確認與聯繫，不另作其他行銷用途。
+        預約資料透過 Google Apps Script 處理並儲存於 Google 試算表，於本物件銷售結束後刪除。
+        您可於預約聯繫時要求查詢、更正或刪除資料；不提供 LINE ID 不影響預約。
       </div>
       <div class="submit-row"><button class="submit-btn" type="submit" id="submitBtn">送出預約</button></div>
       <div class="form-msg" id="formMsg" role="status"></div>
+      <div class="booking-receipt" id="bookingReceipt" role="status" tabindex="-1" hidden><h3>預約資料已收到</h3><p id="receiptDetails"></p><p>我們會盡快以電話、簡訊或您提供的 LINE 聯繫。看屋時間仍以後續確認為準，請於收到確認後再到場。</p></div>
     </form>
   </div>
 </section>
 
 <footer>
   <div class="fbrand">何 必 館</div>
-  本頁面為何必館本戶資訊展示與預約看屋頁面。<br>
-  頁面所載社區資訊整理自公開資料，實際情況以現場與產權文件為準。
+  面積及用途依產權登記資料；<br>
+  屋況與附贈設備於看屋及簽約時逐項確認。
 </footer>
 
+<script src="media/optimized/manifest.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════════
    ▼▼ 設定區：只需要改這裡 ▼▼
    ═══════════════════════════════════════════════════════════ */
 const CONFIG = {
-  /* 1. Google Apps Script 部署後的網址（見 apps-script/README 步驟），貼在引號內 */
+  /* 1. Google Apps Script 部署後的網址（見 apps-script/SETUP.md 步驟），貼在引號內 */
   SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxdvzxrHNJjfR2l0t2lYuK2NEhKxjrN2UspiuK4Qs6GgJeTXEyhDBPa5J6HVRsO4v0O/exec",
 
   /* 2. 開價（單位：萬）。填數字後頁面會自動顯示開價並計算投報率，例如 1280 */
   PRICE_WAN: 1980,
 
-  /* 3. 月租金行情（元）。投資價值區的月租金、年租金、投報率都由這個數字推算 */
-  RENT: 36000,
+  /* 3. 目前月租行情參考（元），不可將行情寫成已成交紀錄。
+        年租金與毛租金投報率依 MARKET_RENT 全年出租試算，並非保證收益。 */
+  MARKET_RENT: 36000,
 
   /* 4. 每個時段可接受的組數；額滿的時段會顯示「已額滿」並無法選取。
         改這個數字要同步改 apps-script/Code.gs 的 SLOT_CAPACITY。 */
   SLOT_CAPACITY: 1,
+  BOOKING_SCHEMA_VERSION: 3,
 
   /* 5. 看屋日期與時段。
         一般日期：填 start / end（24h 制），every 是每場長度（分鐘）。
         彈性選項：改填 slots 陣列原樣顯示，並加 flexible:true 表示不受名額限制。 */
   DATES: [
-    { label: "2026/9/6（日）", start: "14:00", end: "17:00", every: 60 },
-    { label: "2026/9/11（五）", start: "12:00", end: "13:00", every: 60 },
-    { label: "2026/9/12（六）", start: "14:00", end: "17:00", every: 60 },
+    { iso: "2026-09-06", label: "2026/9/6（日）", start: "14:00", end: "17:00", every: 60 },
+    { iso: "2026-09-11", label: "2026/9/11（五）", start: "12:00", end: "13:00", every: 60 },
+    { iso: "2026-09-12", label: "2026/9/12（六）", start: "14:00", end: "17:00", every: 60 },
     { label: "其他時間（送出後與您協調）", slots: ["由專人與您聯繫安排"], flexible: true },
   ],
 
   /* 6. 照片影片：分區呈現，把檔名放進對應群組即可（顯示順序＝陣列順序）。
         hero      ── 頁首背景大圖（單一檔名）
+        tourPoster ── 室內導覽影片的實拍封面
+        conceptPlan ── 獨立開啟的家具配置概念圖，不放入實拍相簿
         lifestyle ── 區位機能下方的「生活・休閒・通勤機能」圖片帶
         community ── 社區公設區塊的圖片帶（留空則整條隱藏）
         interior  ── 完整室內相簿；第一支影片放在導覽引言，照片依下方 ROOM_MEDIA 分組
@@ -833,6 +950,8 @@ const CONFIG = {
         支援 jpg/png/webp/gif/mp4/webm。 */
   MEDIA: {
     hero: "hero-exterior.jpg",
+    tourPoster: "interior-living-window.jpg",
+    conceptPlan: "floor-plan-color-v1.png",
     lifestyle: [
       "citylink-1.jpg",
       "碧山岩賞櫻秘境.jpg",
@@ -862,7 +981,6 @@ const CONFIG = {
       "interior-bathroom-wide.jpg",
       "interior-bathroom.jpg",
       "interior-balcony-view.jpg",
-      "floor-plan-color-v1.png",
     ],
     /* 3D 立體地圖：與下方 Google 地圖重複，暫時停用。
        要恢復就把檔名填回來（檔案放 media/），整塊會自動出現在 Google 地圖上方。 */
@@ -913,7 +1031,7 @@ const CONFIG = {
     "amenity-mahjong.jpg": "何必館麻將間與電動麻將桌",
     "amenity-mailroom.jpg": "何必館一樓信箱區與迎賓門廳",
     "interior-tour.mp4": "何必館本戶室內導覽影片",
-    "floor-plan-color-v1.png": "家具配置概念示意（依原始裝修圖面製作）",
+    "floor-plan-color-v1.png": "家具配置概念示意，非現況格局或丈量圖；不作門窗與設備位置依據，現況請參閱本戶實拍",
     "interior-living-window.jpg": "玄關・大面採光・到頂收納",
     "interior-living-storage.jpg": "到頂衣櫃・懸浮化妝桌・機能吧台",
     "interior-projector-screen.jpg": "客廳 100 吋 16:9 投影布幕",
@@ -930,17 +1048,49 @@ const CONFIG = {
    ▲▲ 設定區結束，以下不用動 ▲▲
    ═══════════════════════════════════════════════════════════ */
 
-/* 開價、租金與投報率：全部由 CONFIG.RENT / CONFIG.PRICE_WAN 推算，改一處即可 */
+/* 預約規則（純函式，可獨立測試；電話規則與 Code.gs 保持一致） */
+const BookingRules = (() => {
+  function normalizePhone(value) {
+    const raw = String(value || "").normalize("NFKC").trim();
+    if (raw.length > 40 || /[^+\d\s().-]/.test(raw)) return "";
+    let phone = raw.replace(/[\s().-]/g, "");
+    if (phone.indexOf("+886") === 0) phone = "0" + phone.slice(4).replace(/^0/, "");
+    if (/^09\d{8}$/.test(phone) || /^0[2-8]\d{7,8}$/.test(phone) || /^\+[1-9]\d{7,14}$/.test(phone)) return phone;
+    return "";
+  }
+  const minutes = t => { const [h,m] = t.split(":").map(Number); return h * 60 + m; };
+  const time = m => String(Math.floor(m / 60)).padStart(2,"0") + ":" + String(m % 60).padStart(2,"0");
+  function allSlots(d) {
+    if (d.slots) return d.slots;
+    const out = [], step = d.every || 60;
+    for (let m = minutes(d.start); m + step <= minutes(d.end); m += step) out.push(time(m) + " – " + time(m + step));
+    return out;
+  }
+  function start(d, slot) {
+    if (!d || !allSlots(d).includes(slot)) return NaN;
+    return d.flexible ? Infinity : Date.parse(d.iso + "T" + slot.slice(0,5) + ":00+08:00");
+  }
+  const slotsOf = (d, now = Date.now()) => allSlots(d).filter(slot => start(d, slot) > now);
+  const validSelection = (date, slot, now = Date.now()) => start(CONFIG.DATES.find(d => d.label === date), slot) > now;
+  return { normalizePhone, allSlots, start, slotsOf, validSelection };
+})();
+
+/* 開價、租金與投報率：數值卡片由 CONFIG 推算；異動時也需同步靜態文案與分享資訊。 */
 (function(){
-  document.getElementById("rentVal").innerHTML =
-    Number(CONFIG.RENT).toLocaleString() + "<small>／月</small>";
+  document.getElementById("marketRentVal").innerHTML =
+    Number(CONFIG.MARKET_RENT).toLocaleString("zh-TW") + "<small> 元</small>";
   document.getElementById("annualVal").innerHTML =
-    +(CONFIG.RENT * 12 / 10000).toFixed(2) + "<small> 萬</small>";
+    +(CONFIG.MARKET_RENT * 12 / 10000).toFixed(2) + "<small> 萬</small>";
 
   if (CONFIG.PRICE_WAN) {
-    document.getElementById("priceVal").innerHTML =
-      Number(CONFIG.PRICE_WAN).toLocaleString() + "<small> 萬</small>";
-    const y = (CONFIG.RENT * 12) / (CONFIG.PRICE_WAN * 10000) * 100;
+    const price = Number(CONFIG.PRICE_WAN).toLocaleString("zh-TW");
+    document.querySelectorAll("[data-price-wan]").forEach(el => {
+      el.innerHTML = price + '<small class="stat-unit"> 萬</small>';
+    });
+    document.querySelectorAll("[data-price-text]").forEach(el => {
+      el.textContent = price + " 萬";
+    });
+    const y = (CONFIG.MARKET_RENT * 12) / (CONFIG.PRICE_WAN * 10000) * 100;
     document.getElementById("yieldVal").innerHTML = y.toFixed(2) + "<small> %</small>";
   }
 })();
@@ -952,6 +1102,17 @@ const CONFIG = {
   const isVideo = f => /\.(mp4|webm|mov)$/i.test(f);
   const src = f => "media/" + f;
   const desc = f => mediaAlt[f] || (isVideo(f) ? "何必館影片" : "何必館實景");
+  const responsive = window.HEBIGUAN_IMAGES || {};
+  function previewImage(f, sizes){
+    const img = document.createElement("img"), data = responsive[f];
+    if (data) {
+      img.sizes = sizes;
+      img.srcset = data.variants.map(v => src(v.file) + " " + v.width + "w").join(", ");
+      img.width = data.width; img.height = data.height;
+    }
+    img.src = src(f); img.alt = desc(f); img.decoding = "async";
+    return img;
+  }
 
   /* ── lightbox（所有圖片影片共用） ── */
   const lb = document.getElementById("lightbox");
@@ -960,11 +1121,32 @@ const CONFIG = {
   const lbCounter = document.getElementById("lbCounter");
   const lbPrev = document.getElementById("lbPrev");
   const lbNext = document.getElementById("lbNext");
+  const lbTools = document.getElementById("lbTools"), zoomIn = document.getElementById("lbZoomIn"), zoomOut = document.getElementById("lbZoomOut");
+  const zoomReset = document.getElementById("lbZoomReset"), zoomLabel = document.getElementById("lbZoomLabel"), original = document.getElementById("lbOriginal");
   let lastFocus = null;
   let activeList = [];
   let activeIndex = 0;
-  let touchStartX = 0;
-  let touchStartY = 0;
+  let scale = 1, panX = 0, panY = 0, gesture = null, hadPinch = false;
+  const pointers = new Map();
+  const photo = () => lbContent.querySelector("img");
+  const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+  function paintZoom(){
+    const img = photo(); if (!img) return;
+    const maxX = Math.max(0, (img.offsetWidth * scale - lbContent.clientWidth) / 2);
+    const maxY = Math.max(0, (img.offsetHeight * scale - lbContent.clientHeight) / 2);
+    panX = clamp(panX, -maxX, maxX); panY = clamp(panY, -maxY, maxY);
+    img.style.transform = "translate(" + panX + "px," + panY + "px) scale(" + scale + ")";
+    lbContent.classList.toggle("zoomed", scale > 1);
+    zoomLabel.textContent = Math.round(scale * 100) + "%";
+    zoomOut.disabled = scale <= 1; zoomIn.disabled = scale >= 4;
+  }
+  function setZoom(next){ scale = clamp(next, 1, 4); if (scale === 1) panX = panY = 0; paintZoom(); }
+  function resetZoom(){ pointers.clear(); gesture = null; hadPinch = false; scale = 1; panX = panY = 0; lbContent.classList.remove("zoomed"); paintZoom(); }
+  zoomIn.addEventListener("click", () => setZoom(scale + .5));
+  zoomOut.addEventListener("click", () => setZoom(scale - .5));
+  zoomReset.addEventListener("click", () => setZoom(1));
+  lbContent.addEventListener("dblclick", e => { if (photo()) { e.preventDefault(); setZoom(scale > 1 ? 1 : 2); } });
+  window.addEventListener("resize", paintZoom);
 
   const renderLightbox = () => {
     const f = activeList[activeIndex];
@@ -977,8 +1159,14 @@ const CONFIG = {
       media.playsInline = true;
     } else {
       media.alt = desc(f);
+      media.draggable = false;
+      media.addEventListener("load", paintZoom);
     }
+    lbContent.dataset.kind = isVideo(f) ? "video" : "photo";
+    lbTools.hidden = isVideo(f);
+    original.href = src(f);
     lbContent.replaceChildren(media);
+    resetZoom();
     lbCaption.textContent = desc(f);
     lbCounter.textContent = activeList.length > 1 ? (activeIndex + 1) + " / " + activeList.length : "";
     lbPrev.hidden = activeList.length < 2;
@@ -992,6 +1180,7 @@ const CONFIG = {
     lbCaption.textContent = "";
     lbCounter.textContent = "";
     activeList = [];
+    resetZoom();
     if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
   };
   const open = (f, list, index) => {
@@ -1019,23 +1208,57 @@ const CONFIG = {
     if (e.key === "Escape") close();
     if (e.key === "ArrowLeft") move(-1);
     if (e.key === "ArrowRight") move(1);
+    if (e.key === "+" || e.key === "=") setZoom(scale + .5);
+    if (e.key === "-") setZoom(scale - .5);
+    if (e.key === "0") setZoom(1);
+    if (e.key === "Tab") {
+      const controls = [...lb.querySelectorAll("button,a[href],video[controls]")].filter(el => !el.disabled && el.getClientRects().length);
+      const first = controls[0], last = controls[controls.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
-  lbContent.addEventListener("touchstart", e => {
-    const t = e.changedTouches[0];
-    touchStartX = t.clientX;
-    touchStartY = t.clientY;
-  }, { passive: true });
-  lbContent.addEventListener("touchend", e => {
-    const t = e.changedTouches[0];
-    const dx = t.clientX - touchStartX;
-    const dy = t.clientY - touchStartY;
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) move(dx < 0 ? 1 : -1);
-  }, { passive: true });
+  function beginGesture(){
+    const pts = [...pointers.values()];
+    if (pts.length >= 2) {
+      hadPinch = true;
+      gesture = { kind: "pinch", distance: Math.max(1, Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y)), x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2, scale, panX, panY };
+    } else if (pts.length === 1) gesture = { kind: "pan", x: pts[0].x, y: pts[0].y, panX, panY };
+    else gesture = null;
+  }
+  lbContent.addEventListener("pointerdown", e => {
+    if (!photo() || (e.pointerType === "mouse" && e.button !== 0)) return;
+    if (!pointers.size) hadPinch = false;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    lbContent.setPointerCapture(e.pointerId); beginGesture();
+  });
+  lbContent.addEventListener("pointermove", e => {
+    if (!pointers.has(e.pointerId) || !gesture) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const pts = [...pointers.values()];
+    if (gesture.kind === "pinch" && pts.length >= 2) {
+      const rect = lbContent.getBoundingClientRect(), cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+      scale = clamp(gesture.scale * Math.hypot(pts[1].x - pts[0].x, pts[1].y - pts[0].y) / gesture.distance, 1, 4);
+      const ratio = scale / gesture.scale;
+      panX = (pts[0].x + pts[1].x) / 2 - cx - (gesture.x - cx - gesture.panX) * ratio;
+      panY = (pts[0].y + pts[1].y) / 2 - cy - (gesture.y - cy - gesture.panY) * ratio;
+    } else if (scale > 1) { panX = gesture.panX + e.clientX - gesture.x; panY = gesture.panY + e.clientY - gesture.y; }
+    paintZoom();
+  });
+  function endPointer(e){
+    if (!pointers.has(e.pointerId)) return;
+    const dx = gesture ? e.clientX - gesture.x : 0, dy = gesture ? e.clientY - gesture.y : 0;
+    const swipe = e.type === "pointerup" && pointers.size === 1 && !hadPinch && scale === 1 && Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy);
+    pointers.delete(e.pointerId); beginGesture();
+    if (swipe) move(dx < 0 ? 1 : -1);
+  }
+  lbContent.addEventListener("pointerup", endPointer);
+  lbContent.addEventListener("pointercancel", endPointer);
 
   /* ── 頁首背景 ── */
   if (M.hero) {
-    document.getElementById("heroBg").innerHTML =
-      '<img src="' + src(M.hero) + '" alt="' + desc(M.hero) + '">';
+    const img = previewImage(M.hero, "100vw"); img.fetchPriority = "high";
+    document.getElementById("heroBg").append(img);
   }
 
   /* ── 圖片帶；list 為空就整條不輸出（不留空白） ── */
@@ -1065,9 +1288,11 @@ const CONFIG = {
     el.className = "strip-item reveal-img";
     el.dataset.label = desc(f);
     el.setAttribute("aria-label", "放大查看：" + desc(f));
-    el.innerHTML = isVideo(f)
-      ? '<video src="' + src(f) + '" muted playsinline preload="metadata"></video>'
-      : '<img src="' + src(f) + '" alt="' + desc(f) + '" loading="lazy">';
+    if (isVideo(f)) el.innerHTML = '<video src="' + src(f) + '" muted playsinline preload="metadata"></video>';
+    else {
+      const sizes = index === 0 ? "(max-width:720px) calc(100vw - 48px), 680px" : "(max-width:720px) calc((100vw - 56px) / 2), 340px";
+      const img = previewImage(f, sizes); img.loading = "lazy"; el.append(img);
+    }
     el.addEventListener("click", () => open(f, list, index));
     return el;
   }
@@ -1096,7 +1321,9 @@ const CONFIG = {
   if (firstVideo) {
     const stage = document.getElementById("interiorStage");
     stage.setAttribute("aria-label", "播放：" + desc(firstVideo));
-    stage.innerHTML = '<video src="' + src(firstVideo) + '" muted playsinline preload="metadata"></video>' +
+    const posterFile = responsive[M.tourPoster]?.variants[0].file || M.tourPoster;
+    const poster = posterFile ? ' poster="' + src(posterFile) + '"' : "";
+    stage.innerHTML = '<video src="' + src(firstVideo) + '"' + poster + ' muted playsinline preload="none"></video>' +
                       '<div class="play-badge"><span>▶</span></div>';
     stage.addEventListener("click", () => open(firstVideo));
   } else {
@@ -1109,6 +1336,10 @@ const CONFIG = {
     button.setAttribute("aria-label", "開啟完整室內相簿，共 " + photos.length + " 張");
     button.addEventListener("click", () => open(photos[0], photos, 0));
   });
+  document.querySelectorAll("[data-concept-plan]").forEach(button => {
+    button.hidden = !M.conceptPlan;
+    button.addEventListener("click", () => open(M.conceptPlan));
+  });
 
   document.querySelectorAll("[data-room-gallery]").forEach(mount => {
     const entries = (CONFIG.ROOM_MEDIA[mount.dataset.roomGallery] || []).filter(item => photos.includes(item.file));
@@ -1119,9 +1350,8 @@ const CONFIG = {
       button.type = "button";
       button.className = "room-photo" + (entry.portrait ? " room-photo--portrait" : "");
       button.setAttribute("aria-label", "放大查看：" + desc(entry.file));
-      const img = document.createElement("img");
-      img.src = src(entry.file);
-      img.alt = desc(entry.file);
+      const sizes = index === 0 ? "(max-width:720px) calc(100vw - 48px), 580px" : "(max-width:720px) 160px, 200px";
+      const img = previewImage(entry.file, sizes);
       img.loading = "lazy";
       img.decoding = "async";
       const mark = document.createElement("span");
@@ -1164,32 +1394,50 @@ const CONFIG = {
   }
 })();
 
+/* 手機導覽與成交案例：表格是單一資料來源，手機另外呈現直式卡片。 */
+(function(){
+  const toggle = document.getElementById("mobileNavToggle"), menu = document.getElementById("mobileNav");
+  const close = () => { menu.hidden = true; toggle.setAttribute("aria-expanded", "false"); };
+  toggle.addEventListener("click", () => { menu.hidden = !menu.hidden; toggle.setAttribute("aria-expanded", String(!menu.hidden)); });
+  menu.addEventListener("click", e => { if (e.target.closest("a")) close(); });
+  document.addEventListener("click", e => { if (!menu.contains(e.target) && !toggle.contains(e.target)) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { close(); toggle.focus(); } });
+  window.matchMedia("(min-width:821px)").addEventListener("change", e => { if (e.matches) close(); });
+  const cards = document.getElementById("comparisonCards");
+  document.querySelectorAll(".comp-table tbody tr").forEach(row => {
+    const cells = [...row.cells], card = document.createElement("article");
+    card.className = "comp-card" + (row.classList.contains("self") ? " self" : "");
+    const title = document.createElement("h4"), kind = document.createElement("p"), price = document.createElement("div"), facts = document.createElement("dl");
+    title.textContent = cells[0].textContent;
+    kind.className = "comp-card-kind"; kind.textContent = cells[1].innerText;
+    price.className = "comp-card-price"; price.append(...[...cells[3].childNodes].map(n => n.cloneNode(true)));
+    [["坪數",cells[2]], ["單價",cells[4]]].forEach(([label,cell]) => {
+      const group = document.createElement("div"), dt = document.createElement("dt"), dd = document.createElement("dd");
+      dt.textContent = label; dd.textContent = cell.textContent; group.append(dt, dd); facts.append(group);
+    });
+    card.append(title, kind, price, facts); cards.append(card);
+  });
+  cards.closest(".market-reference").classList.add("has-cards");
+})();
+
 /* 看屋日期與時段選單（含剩餘名額） */
+let pendingBooking = null; // 僅保留在本頁記憶體，重試沿用識別碼，不儲存聯絡資料到瀏覽器。
 const Booking = (function(){
   const dateSel = document.getElementById("fDate");
   const slotSel = document.getElementById("fSlot");
-  const toMin = t => { const [h,m] = t.split(":").map(Number); return h*60+m; };
-  const toStr = m => String(Math.floor(m/60)).padStart(2,"0") + ":" + String(m%60).padStart(2,"0");
-
-  /* 各「日期|時段」已預約組數；null 代表還沒查到（或查詢失敗）→ 不顯示名額字樣 */
+  const status = document.getElementById("scheduleStatus");
+  const preferredRow = document.getElementById("preferredTimeRow"), preferred = document.getElementById("fPreferredTime");
   let taken = null;
-
-  function slotsOf(d){
-    if (d.slots) return d.slots;
-    const step = d.every || 60, out = [];
-    for (let m = toMin(d.start); m + step <= toMin(d.end); m += step) out.push(toStr(m) + " – " + toStr(m + step));
-    return out;
-  }
-
+  let refreshing = false;
   function buildSlots(){
-    const d = CONFIG.DATES[dateSel.selectedIndex];
+    if (pendingBooking?.uncertain) return;
+    const d = CONFIG.DATES.find(item => item.label === dateSel.value);
     if (!d) return;
     const prev = slotSel.value;
     slotSel.innerHTML = "";
-    slotsOf(d).forEach(v => {
+    BookingRules.slotsOf(d).forEach(v => {
       const opt = document.createElement("option");
       opt.value = v;
-      /* 彈性時段不受名額限制；availability 查不到時也只顯示原文字 */
       if (d.flexible || taken === null) {
         opt.textContent = v;
       } else {
@@ -1201,39 +1449,54 @@ const Booking = (function(){
       }
       slotSel.appendChild(opt);
     });
-    /* 盡量保留原本選的時段，但不要停在已額滿的選項上 */
     const keep = [...slotSel.options].find(o => o.value === prev && !o.disabled);
     const first = [...slotSel.options].find(o => !o.disabled);
-    slotSel.value = (keep || first || slotSel.options[0] || {}).value || "";
+    if (!first) {
+      const opt = document.createElement("option"); opt.value = ""; opt.textContent = "此日期已無可預約時段"; opt.disabled = true; slotSel.prepend(opt);
+    }
+    slotSel.value = (keep || first || {}).value || "";
+    preferredRow.hidden = !d.flexible; preferred.disabled = !d.flexible;
   }
-
+  function updateSchedule(){
+    if (pendingBooking?.uncertain) return; // 結果未明時保留原場次，不自動改選下一場。
+    const previousDate = dateSel.value, previousSlot = slotSel.value;
+    const available = CONFIG.DATES.filter(d => BookingRules.slotsOf(d).length);
+    dateSel.innerHTML = "";
+    available.forEach(d => { const opt = document.createElement("option"); opt.value = d.label; opt.textContent = d.label; dateSel.append(opt); });
+    if (available.some(d => d.label === previousDate)) dateSel.value = previousDate;
+    buildSlots();
+    const fixed = available.filter(d => !d.flexible);
+    document.getElementById("bookingSchedule").textContent = fixed.length
+      ? fixed.map(d => { const slots = BookingRules.slotsOf(d); return d.label.replace(/^\d{4}\//, "") + " " + slots[0].slice(0,5) + "–" + slots[slots.length - 1].slice(-5); }).join("\n")
+      : "目前固定場次已結束，歡迎選擇其他時間洽約。";
+    if (previousDate && (previousDate !== dateSel.value || previousSlot !== slotSel.value)) status.textContent = "可預約時段已更新，請確認日期與時段。";
+  }
   async function refresh(){
-    if (!CONFIG.SCRIPT_URL) return;
+    if (!CONFIG.SCRIPT_URL || refreshing) return;
+    refreshing = true;
     try {
-      const res = await fetch(CONFIG.SCRIPT_URL + "?action=availability", { method: "GET" });
+      const res = await fetch(CONFIG.SCRIPT_URL + "?action=availability", { method: "GET", cache: "no-store" });
       const data = await res.json();
-      if (data && typeof data === "object") { taken = data; buildSlots(); }
-    } catch (err) {
-      /* 查不到名額不影響預約：時段照常顯示，只是沒有剩餘組數字樣 */
-      taken = null;
+      taken = data && typeof data === "object" && !Array.isArray(data) ? data : null;
+    } catch (err) { taken = null; }
+    finally {
+      refreshing = false;
+      if (!document.getElementById("submitBtn").disabled) updateSchedule();
     }
   }
-
-  CONFIG.DATES.forEach((d,i) => {
-    const opt = document.createElement("option");
-    opt.value = d.label; opt.textContent = d.label; opt.dataset.idx = i;
-    dateSel.appendChild(opt);
-  });
-  dateSel.addEventListener("change", buildSlots);
-  buildSlots();
+  dateSel.addEventListener("change", () => { status.textContent = ""; buildSlots(); });
+  updateSchedule();
   refresh();
-
-  return { refresh, buildSlots };
+  setInterval(() => { if (!document.getElementById("submitBtn").disabled) updateSchedule(); }, 60000);
+  window.addEventListener("focus", () => { if (!document.getElementById("submitBtn").disabled) { updateSchedule(); refresh(); } });
+  return { refresh, buildSlots, updateSchedule };
 })();
 
 /* 個資聲明展開 */
-document.getElementById("privacyToggle").addEventListener("click", () =>
-  document.getElementById("privacyText").classList.toggle("open"));
+document.getElementById("privacyToggle").addEventListener("click", function(){
+  const open = document.getElementById("privacyText").classList.toggle("open");
+  this.setAttribute("aria-expanded", String(open));
+});
 
 /* 表單送出 → Google Apps Script → Google Sheet */
 document.getElementById("bookForm").addEventListener("submit", async function(e){
@@ -1241,52 +1504,94 @@ document.getElementById("bookForm").addEventListener("submit", async function(e)
   const msg = document.getElementById("formMsg");
   const btn = document.getElementById("submitBtn");
   const form = e.target;
+  if (btn.disabled) return;
   msg.className = "form-msg";
+  form.phone.removeAttribute("aria-invalid");
   if (form.company.value) return; /* honeypot 防機器人 */
-  if (!form.name.value.trim() || !form.phone.value.trim() || !form.email.value.trim()) {
-    msg.textContent = "請完整填寫姓名、電話與電子信箱。"; msg.classList.add("err"); return;
+  if (!form.name.value.trim() || !form.phone.value.trim()) {
+    msg.textContent = "請填寫姓名與聯絡電話。"; msg.classList.add("err"); return;
   }
   if (!document.getElementById("fAgree").checked) {
     msg.textContent = "請先閱讀並勾選個資告知聲明。"; msg.classList.add("err"); return;
   }
-  const selectedSlot = form.slot.selectedOptions[0];
-  if (!selectedSlot || selectedSlot.disabled || !selectedSlot.value) {
-    msg.textContent = "此日期已無可預約時段，請改選其他日期。"; msg.classList.add("err"); return;
+  const phone = BookingRules.normalizePhone(form.phone.value);
+  if (!phone) {
+    msg.textContent = "請填寫有效的手機或市話號碼，國際號碼請加上 + 國碼。"; msg.classList.add("err");
+    form.phone.setAttribute("aria-invalid", "true"); form.phone.focus(); return;
   }
   if (!CONFIG.SCRIPT_URL) {
     msg.textContent = "表單尚未開放，請稍後再試。"; msg.classList.add("err"); return;
   }
+  const flexible = CONFIG.DATES.find(d => d.label === form.date.value)?.flexible;
+  const payload = { name: form.name.value.trim(), title: "", phone, lineId: form.lineId.value.trim(), privacyConsent: true,
+    date: form.date.value, slot: form.slot.value, preferredTime: flexible ? form.preferredTime.value.trim() : "" };
+  const fingerprint = JSON.stringify(payload);
+  const retrying = pendingBooking?.uncertain && pendingBooking.fingerprint === fingerprint;
+  const selectedSlot = form.slot.selectedOptions[0];
+  if (!retrying && (!selectedSlot || selectedSlot.disabled || !selectedSlot.value)) {
+    msg.textContent = "此日期已無可預約時段，請改選其他日期。"; msg.classList.add("err"); return;
+  }
+  if (!retrying && !BookingRules.validSelection(form.date.value, form.slot.value)) {
+    msg.textContent = "此時段已開始或不在開放場次內，請重新選擇。"; msg.classList.add("err"); Booking.updateSchedule(); return;
+  }
+  if (!pendingBooking || pendingBooking.fingerprint !== fingerprint) pendingBooking = { fingerprint, requestId: crypto.randomUUID() };
+  payload.requestId = pendingBooking.requestId;
   btn.disabled = true; msg.textContent = "送出中…";
   try {
-    const payload = {
-      name: form.name.value.trim(),
-      title: form.title.value,
-      phone: form.phone.value.trim(),
-      email: form.email.value.trim(),
-      date: form.date.value,
-      slot: form.slot.value,
-    };
+    const capabilityRes = await fetch(CONFIG.SCRIPT_URL + "?action=capabilities", { method: "GET", cache: "no-store" });
+    const capabilities = await capabilityRes.json().catch(() => null);
+    if (!capabilities || capabilities.bookingSchemaVersion !== CONFIG.BOOKING_SCHEMA_VERSION) {
+      msg.textContent = retrying ? "預約表單更新中，上次送出結果尚未確認，請稍後再試。" : "預約表單更新中，資料尚未送出，請稍後再試。";
+      msg.classList.add("err"); return;
+    }
     /* 不自訂 Content-Type：維持 text/plain 才不會觸發 CORS preflight，
        這樣就能讀回 Apps Script 的 JSON 回應（判斷是否額滿）。 */
+    pendingBooking.uncertain = true;
     const res = await fetch(CONFIG.SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
     const out = await res.json();
+    if (!out || typeof out.ok !== "boolean") throw new Error("Unreadable booking result");
+    pendingBooking = null; // 收到明確結果才解除鎖定；未知結果保留原識別碼。
 
     if (out && out.ok) {
-      msg.textContent = "預約資料已送出，時段仍以後續聯繫確認為準。";
-      msg.classList.add("ok");
+      msg.textContent = "";
+      const receipt = document.getElementById("bookingReceipt");
+      document.getElementById("receiptDetails").textContent = payload.date + "\n" + payload.slot + (payload.preferredTime ? "\n希望時間：" + payload.preferredTime : "");
+      receipt.hidden = false; receipt.focus({ preventScroll: true }); receipt.scrollIntoView({ behavior: "auto", block: "nearest" });
+      pendingBooking = null;
       form.reset();
-      document.getElementById("fDate").dispatchEvent(new Event("change"));
-      Booking.refresh();
+      document.getElementById("scheduleStatus").textContent = "";
     } else if (out && out.reason === "full") {
       msg.textContent = "該時段剛剛額滿了，請改選其他時段。"; msg.classList.add("err");
       await Booking.refresh();
+    } else if (out && out.reason === "consent_required") {
+      msg.textContent = "請先閱讀並勾選個資告知聲明。"; msg.classList.add("err");
+    } else if (out && out.reason === "required_fields") {
+      msg.textContent = "請填寫姓名、聯絡電話，並選擇看屋日期與時段。"; msg.classList.add("err");
+    } else if (out && out.reason === "invalid_phone") {
+      msg.textContent = "請確認聯絡電話格式，再重新送出。"; msg.classList.add("err");
+      form.phone.setAttribute("aria-invalid", "true"); form.phone.focus();
+    } else if (out && ["expired_slot", "invalid_slot"].includes(out.reason)) {
+      msg.textContent = "此時段已開始或已停止開放，請重新選擇。"; msg.classList.add("err");
+    } else if (out && out.reason === "request_conflict") {
+      pendingBooking = null;
+      msg.textContent = "預約資料已變更，請確認內容後重新送出。"; msg.classList.add("err");
     } else {
       msg.textContent = "送出失敗，請稍後再試。"; msg.classList.add("err");
     }
   } catch (err) {
-    msg.textContent = "送出失敗，請稍後再試。"; msg.classList.add("err");
+    msg.textContent = pendingBooking?.uncertain
+      ? "尚未確認送出結果，請保留本頁，連線恢復後按「確認送出結果」。系統會核對同一筆預約，不會重複占位。"
+      : "目前無法連線，資料尚未送出，請稍後再試。";
+    msg.classList.add("err");
   } finally {
     btn.disabled = false;
+    btn.textContent = pendingBooking?.uncertain ? "確認送出結果" : "送出預約";
+    form.querySelectorAll("input, select").forEach(input => {
+      if (pendingBooking?.uncertain && !input.disabled) { input.disabled = true; input.dataset.pendingLock = "true"; }
+      else if (!pendingBooking?.uncertain && input.dataset.pendingLock) { input.disabled = false; delete input.dataset.pendingLock; }
+    });
+    Booking.updateSchedule();
+    Booking.refresh();
   }
 });
 

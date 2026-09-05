@@ -2,6 +2,9 @@
   "name": "hebiguan",
   "private": true,
   "scripts": {
-    "start": "npx --yes serve -l 3000 ."
-  }
+    "start": "npx --yes serve -l 3000 .",
+    "test": "node --test tests/*.test.cjs",
+    "images": "node scripts/optimize-images.cjs"
+  },
+  "devDependencies": { "sharp": "0.35.4" }
 }
