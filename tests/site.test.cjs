@@ -7,7 +7,7 @@ const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
-const configSource = script.slice(0, script.indexOf('/* 開價、租金與投報率'));
+const configSource = script.slice(0, script.indexOf('/* 售價、租金與投報率'));
 const config = vm.runInNewContext(configSource + '\nCONFIG;');
 const extraHeaders = ['LINE ID', '個資同意', '希望看屋時間', '通知狀態', '預約識別碼'];
 function clockAt(iso = '2026-09-05T12:00:00+08:00') {
@@ -44,6 +44,47 @@ test('page and sharing metadata show market rent only, not historical rent claim
   assert.match(html, /meta property="og:description"[^>]*月租行情參考36,000元/);
 });
 
+test('sale price wording and fixed-price policy are consistent without adding a booking requirement', () => {
+  assert.doesNotMatch(html, /開價|可議價|誠可議/);
+  assert.match(html, /<title>[^<]*售價1,980萬[^<]*不二價<\/title>/);
+  for (const key of ['description', 'og:title', 'og:description']) {
+    const tag = html.match(new RegExp('<meta (?:name|property)="' + key + '"[^>]*>'))[0];
+    assert.match(tag, /售價1,980萬/);
+    assert.match(tag, /不二價/);
+  }
+  const heroPrice = html.match(/<div class="hero-price">[\s\S]*?<\/div>/)[0];
+  assert.match(heroPrice, /<span>售價<\/span>/);
+  assert.match(heroPrice, /<\/b><span class="price-policy">不二價<\/span>/);
+  assert.match(html, /\.hero-price\{[^}]*flex-wrap:wrap/);
+  assert.match(html, /售價與租金參考/);
+  assert.match(html, /本戶列示為售價，並非成交價/);
+  const booking = html.match(/<section[^>]*id="booking"[\s\S]*?<\/section>/)[0];
+  const beforeForm = booking.slice(0, booking.indexOf('<form'));
+  assert.match(beforeForm, /本戶採不二價銷售，歡迎預約看屋。/);
+  assert.equal([...booking.matchAll(/type="checkbox"/g)].length, 1);
+  assert.match(booking, /id="fAgree"[^>]*required/);
+  const optimizer = fs.readFileSync(path.join(root, 'scripts/optimize-images.cjs'), 'utf8');
+  assert.ok(optimizer.includes("script.indexOf('/* 售價、租金與投報率')"));
+});
+
+test('comparison prices show each transaction month and retain property type for mobile cards', () => {
+  const table = html.match(/<table class="comp-table">[\s\S]*?<\/table>/)[0];
+  const rows = [...table.matchAll(/<tr\b[^>]*>[\s\S]*?<\/tr>/g)].map(match => match[0]);
+  for (const [name, month, price, type] of [
+    ['文心移動光城', '115年05月', '2,240 萬', '成屋'],
+    ['碧湖雲景', '115年06月', '2,490 萬', '預售'],
+    ['EAT國際館', '115年06月', '2,600 萬', '成屋'],
+  ]) {
+    const row = rows.find(row => row.includes(name));
+    assert.ok(row, name);
+    assert.ok(row.includes(price + '<small>' + month + '成交價</small>'), name);
+    assert.ok(row.includes('<td>' + type), name);
+  }
+  assert.doesNotMatch(table, /案例成交價|預售成交價/);
+  assert.match(table, /<small>本戶售價<\/small>/);
+  assert.ok(script.includes('price.append(...[...cells[3].childNodes].map(n => n.cloneNode(true)))'));
+});
+
 test('every configured media file exists; actual photos and concept plan stay separate', () => {
   const files = Object.values(config.MEDIA).flat().filter(Boolean);
   for (const file of files) assert.ok(fs.existsSync(path.join(root, 'media', file)), file);
@@ -55,11 +96,54 @@ test('every configured media file exists; actual photos and concept plan stay se
   assert.match(html, /og:image" content="https:\/\/hebiguan\.vercel\.app\/media\/interior-living-window\.jpg/);
 });
 
+test('selected concept plan is visible inline at its full aspect ratio, outside disclosures', () => {
+  const interior = html.match(/<section[^>]*id="interior"[\s\S]*?<\/section>/)[0];
+  const figure = interior.match(/<figure class="concept-plan"[\s\S]*?<\/figure>/)[0];
+  const preceding = interior.slice(0, interior.indexOf(figure));
+  assert.ok(preceding.lastIndexOf('</details>') > preceding.lastIndexOf('<details'));
+  assert.doesNotMatch(figure, /<details\b|<summary\b|\bhidden\b|\breveal\b/);
+  assert.match(figure, /家具配置概念示意圖/);
+  assert.match(figure, /<figcaption class="layout-note">概念圖非現況格局或丈量圖/);
+  const img = figure.match(/<img\b[^>]*>/)[0];
+  assert.ok(img.includes('src="media/' + config.MEDIA.conceptPlan + '"'));
+  assert.match(img, /width="1724" height="912"/);
+  assert.match(img, /loading="lazy" decoding="async"/);
+  const png = fs.readFileSync(path.join(root, 'media', config.MEDIA.conceptPlan));
+  assert.equal(png.readUInt32BE(16), 1724);
+  assert.equal(png.readUInt32BE(20), 912);
+  assert.match(html, /\.concept-plan-image\{[^}]*width:100%/);
+  assert.match(html, /\.concept-plan-image img\{width:100%;height:auto;object-fit:contain\}/);
+  assert.doesNotMatch(html, /查看家具配置概念圖<\/button>/);
+});
+
+test('inline concept plan keeps optional zoom and follows the configured image', () => {
+  const source = script.slice(script.indexOf('  document.querySelectorAll("[data-concept-plan]")'),
+    script.indexOf('  document.querySelectorAll("[data-room-gallery]")'));
+  for (const file of [config.MEDIA.conceptPlan, '']) {
+    let click;
+    const img = {}, figure = {}, opened = [];
+    const button = { querySelector: () => img, addEventListener: (event, handler) => { click = handler; } };
+    vm.runInNewContext(source, {
+      M: { conceptPlan: file }, src: name => 'media/' + name, desc: () => '家具配置概念示意圖',
+      open: name => opened.push(name),
+      document: { querySelectorAll: () => [button], getElementById: () => figure },
+    });
+    assert.equal(figure.hidden, !file);
+    assert.equal(button.hidden, !file);
+    if (file) {
+      assert.equal(img.src, 'media/' + file);
+      assert.equal(img.alt, '家具配置概念示意圖');
+      click();
+      assert.deepEqual(opened, [file]);
+    }
+  }
+});
+
 test('all repeated asking prices render from the same config', () => {
   const nodes = Object.fromEntries(['marketRentVal', 'annualVal', 'yieldVal'].map(id => [id, {}]));
   const prices = [{}, {}, {}];
   const tablePrice = {};
-  const source = script.slice(script.indexOf('/* 開價、租金與投報率'), script.indexOf('/* 分區圖片'));
+  const source = script.slice(script.indexOf('/* 售價、租金與投報率'), script.indexOf('/* 分區圖片'));
   vm.runInNewContext(source, {
     CONFIG: config,
     document: {
@@ -153,7 +237,7 @@ function submissionHarness(response = { ok: true }, capabilities = { bookingSche
     title: { value: '' },
     lineId: { value: '' }, company: { value: '' },
     preferredTime: { value: '' },
-    date: { value: '2026/9/6（日）' },
+    date: { value: '2026/9/12（六）' },
     slot: { value: slot, selectedOptions: [{ value: slot, disabled: false }] },
     reset() { resetCount++; },
     querySelectorAll() { return [this.name, this.title, this.phone, this.lineId, this.date, this.slot, this.preferredTime]; },
@@ -194,10 +278,10 @@ test('LINE ID can be empty; submission includes consent and no buyer email', asy
   assert.equal(h.requests[1].options.method, 'POST');
   assert.equal(h.requests[1].options.headers, undefined); // Keep the existing simple CORS request.
   assert.deepEqual(JSON.parse(h.requests[1].options.body), {
-    name: '王測試', title: '', phone: '0900000000', lineId: '', privacyConsent: true, date: '2026/9/6（日）', slot: '14:00 – 15:00', preferredTime: '', requestId: 'test-request-00000001',
+    name: '王測試', title: '', phone: '0900000000', lineId: '', privacyConsent: true, date: '2026/9/12（六）', slot: '14:00 – 15:00', preferredTime: '', requestId: 'test-request-00000001',
   });
   assert.equal(h.nodes.bookingReceipt.hidden, false);
-  assert.match(h.nodes.receiptDetails.textContent, /2026\/9\/6（日）\n14:00 – 15:00/);
+  assert.match(h.nodes.receiptDetails.textContent, /2026\/9\/12（六）\n14:00 – 15:00/);
   assert.equal(h.resets(), 1);
   assert.equal(h.nodes.submitBtn.disabled, false);
 });
@@ -283,7 +367,7 @@ test('capacity rejection and network errors retain the entered contact details',
 });
 
 const legacyHeaders = ['時間', '姓名', '稱謂', '電話', 'Email', '看屋日期', '時段'];
-const validBooking = { name: '王測試', title: '', phone: '0900000000', lineId: '', privacyConsent: true, date: '2026/9/6（日）', slot: '14:00 – 15:00' };
+const validBooking = { name: '王測試', title: '', phone: '0900000000', lineId: '', privacyConsent: true, date: '2026/9/12（六）', slot: '14:00 – 15:00' };
 
 function backendHarness(initialRows = [legacyHeaders], options = {}) {
   const rows = initialRows ? initialRows.map(row => [...row]) : [];
@@ -339,7 +423,7 @@ test('Apps Script migrates legacy headers, permits blank LINE ID and rejects a s
   const h = backendHarness();
   assert.deepEqual(h.post(validBooking), { ok: true });
   assert.deepEqual(h.rows[0], [...legacyHeaders, ...extraHeaders]);
-  assert.deepEqual(h.rows[1], ['test timestamp', '王測試', '', "'0900000000", '', '2026/9/6（日）', '14:00 – 15:00', '', '已同意', '', '已寄送', '']);
+  assert.deepEqual(h.rows[1], ['test timestamp', '王測試', '', "'0900000000", '', '2026/9/12（六）', '14:00 – 15:00', '', '已同意', '', '已寄送', '']);
   assert.equal(h.messages.length, 1);
   assert.match(h.messages[0].subject, /王測試/);
   assert.match(h.messages[0].body, /LINE ID：未填寫/);
@@ -388,7 +472,7 @@ test('backend requires explicit consent before writing or notifying', () => {
 });
 
 test('migration preserves existing bookings, custom columns and capacity counts', () => {
-  const oldRow = ['old time', '舊預約', '先生', '0900000000', 'past@example.test', '2026/9/6（日）', '14:00 – 15:00', '保留備註'];
+  const oldRow = ['old time', '舊預約', '先生', '0900000000', 'past@example.test', '2026/9/12（六）', '14:00 – 15:00', '保留備註'];
   const h = backendHarness([[...legacyHeaders, '備註'], oldRow]);
   assert.deepEqual(h.post({ ...validBooking, slot: '15:00 – 16:00', lineId: 'buyer_line' }), { ok: true });
   assert.deepEqual(h.rows[0], [...legacyHeaders, '備註', ...extraHeaders]);
@@ -396,7 +480,7 @@ test('migration preserves existing bookings, custom columns and capacity counts'
   assert.equal(h.rows[2][7], '');
   assert.equal(h.rows[2][8], "'buyer_line");
   assert.equal(h.rows[2][9], '已同意');
-  assert.deepEqual(h.get('availability'), { '2026/9/6（日）|14:00 – 15:00': 1, '2026/9/6（日）|15:00 – 16:00': 1 });
+  assert.deepEqual(h.get('availability'), { '2026/9/12（六）|14:00 – 15:00': 1, '2026/9/12（六）|15:00 – 16:00': 1 });
   assert.deepEqual(h.post(validBooking), { ok: false, reason: 'full' });
   assert.deepEqual(h.post({ ...validBooking, slot: '16:00 – 17:00' }), { ok: true });
   assert.equal(h.rows[0].length, 13); // Repeated requests never append duplicate headers.
@@ -417,6 +501,47 @@ test('frontend and backend whitelist the same dates, slots, capacity and schema 
   assert.equal(h.settings.capacity, config.SLOT_CAPACITY);
   assert.equal(h.settings.version, config.BOOKING_SCHEMA_VERSION);
   for (const date of config.DATES) for (const slot of rules.allSlots(date)) assert.equal(h.slotStart(date.label, slot), rules.start(date, slot));
+});
+
+test('September 12 and 13 each offer eight hourly slots, with one group per slot', () => {
+  const fixed = JSON.parse(JSON.stringify(config.DATES.filter(d => !d.flexible)));
+  assert.deepEqual(fixed, [
+    { iso: '2026-09-12', label: '2026/9/12（六）', start: '09:00', end: '17:00', every: 60 },
+    { iso: '2026-09-13', label: '2026/9/13（日）', start: '09:00', end: '17:00', every: 60 },
+  ]);
+  assert.deepEqual(fixed.map(d => new Date(d.iso + 'T00:00:00Z').getUTCDay()), [6, 0]);
+  const rules = rulesAt(), h = backendHarness();
+  assert.equal(config.SLOT_CAPACITY, 1);
+  assert.equal(h.settings.capacity, 1);
+  for (const d of fixed) {
+    const slots = Array.from(rules.allSlots(d));
+    assert.deepEqual(slots, ['09:00 – 10:00', '10:00 – 11:00', '11:00 – 12:00', '12:00 – 13:00',
+      '13:00 – 14:00', '14:00 – 15:00', '15:00 – 16:00', '16:00 – 17:00']);
+    for (const slot of slots) {
+      assert.equal(rules.validSelection(d.label, slot), true);
+      const booking = { ...validBooking, date: d.label, slot };
+      assert.deepEqual(h.post(booking), { ok: true });
+      assert.deepEqual(h.post({ ...booking, name: '另一組測試' }), { ok: false, reason: 'full' });
+    }
+  }
+  assert.equal(h.rows.length, 17);
+  assert.equal(h.messages.length, 16);
+});
+
+test('removed September 6 and 11 slots reject new bookings without deleting historical records', () => {
+  const history = [
+    ['old time', '歷史預約', '先生', '0900000000', '', '2026/9/6（日）', '14:00 – 15:00'],
+    ['old time', '待聯繫預約', '小姐', '0900000000', '', '2026/9/11（五）', '12:00 – 13:00'],
+  ];
+  const h = backendHarness([legacyHeaders, ...history]), rules = rulesAt();
+  for (const row of history) {
+    assert.equal(rules.validSelection(row[5], row[6]), false);
+    assert.deepEqual(h.post({ ...validBooking, date: row[5], slot: row[6] }), { ok: false, reason: 'invalid_slot' });
+  }
+  assert.equal(h.sheetAccesses(), 0);
+  assert.deepEqual(h.post({ ...validBooking, date: '2026/9/13（日）', slot: '09:00 – 10:00' }), { ok: true });
+  assert.deepEqual(h.rows.slice(1, 3), history);
+  assert.equal(h.rows.length, 4);
 });
 
 test('legacy form-encoded true value is accepted only when consent is explicit', () => {
@@ -444,20 +569,23 @@ test('frontend and backend normalize Taiwanese mobile, landline and internationa
 
 test('Taipei slot cutoff is exact, independent of device timezone; passed days disappear', () => {
   const rules = rulesAt(), d = config.DATES[0], h = backendHarness();
-  assert.equal(h.slotStart(d.label, '14:00 – 15:00'), rules.start(d, '14:00 – 15:00'));
-  assert.equal(rules.slotsOf(d, Date.parse('2026-09-06T05:59:59Z')).length, 3);
-  assert.deepEqual(Array.from(rules.slotsOf(d, Date.parse('2026-09-06T06:00:00Z'))), ['15:00 – 16:00', '16:00 – 17:00']);
-  assert.equal(rules.slotsOf(d, Date.parse('2026-09-06T08:00:00Z')).length, 0);
-  assert.equal(rules.slotsOf(d, Date.parse('2026-09-07T00:00:00+08:00')).length, 0);
-  const future = config.DATES.filter(d => rules.slotsOf(d, Date.parse('2026-09-13T00:00:00+08:00')).length);
+  assert.equal(h.slotStart(d.label, '09:00 – 10:00'), rules.start(d, '09:00 – 10:00'));
+  assert.equal(rules.slotsOf(d, Date.parse('2026-09-12T00:59:59Z')).length, 8);
+  assert.deepEqual(Array.from(rules.slotsOf(d, Date.parse('2026-09-12T01:00:00Z'))),
+    ['10:00 – 11:00', '11:00 – 12:00', '12:00 – 13:00', '13:00 – 14:00', '14:00 – 15:00', '15:00 – 16:00', '16:00 – 17:00']);
+  assert.equal(rules.slotsOf(d, Date.parse('2026-09-12T08:00:00Z')).length, 0);
+  assert.equal(rules.slotsOf(d, Date.parse('2026-09-13T00:00:00+08:00')).length, 0);
+  const sunday = config.DATES.filter(d => rules.slotsOf(d, Date.parse('2026-09-13T00:00:00+08:00')).length);
+  assert.deepEqual(Array.from(sunday, d => d.label), ['2026/9/13（日）', '其他時間（送出後與您協調）']);
+  const future = config.DATES.filter(d => rules.slotsOf(d, Date.parse('2026-09-14T00:00:00+08:00')).length);
   assert.deepEqual(Array.from(future, d => d.flexible), [true]);
 });
 
 test('server rejects expired or unlisted dates and slots without storing bookings', () => {
-  const h = backendHarness(null, { now: '2026-09-06T14:00:00+08:00' });
+  const h = backendHarness(null, { now: '2026-09-12T14:00:00+08:00' });
   assert.deepEqual(h.post(validBooking), { ok: false, reason: 'expired_slot' });
   assert.deepEqual(h.rows, []);
-  for (const patch of [{ date: '2020/1/1（三）' }, { slot: '13:00 – 14:00' }, { slot: '14:30 – 15:30' }, { date: '任意其他時間' }]) {
+  for (const patch of [{ date: '2020/1/1（三）' }, { slot: '08:00 – 09:00' }, { slot: '17:00 – 18:00' }, { slot: '14:30 – 15:30' }, { date: '任意其他時間' }]) {
     assert.deepEqual(h.post({ ...validBooking, ...patch }), { ok: false, reason: 'invalid_slot' });
   }
   assert.equal(h.messages.length, 0);
@@ -493,7 +621,7 @@ test('retry keys deduplicate, reject changed data, and do not disclose a booking
   assert.deepEqual(h.post({ ...payload, phone: '0912345678' }), { ok: false, reason: 'request_conflict' });
   assert.deepEqual(h.post({ ...payload, requestId: 'test-request-00000002' }), { ok: false, reason: 'full' });
   assert.deepEqual(h.post({ ...payload, requestId: '../bad' }), { ok: false, reason: 'invalid_request' });
-  const later = backendHarness(h.rows, { now: '2026-09-07T12:00:00+08:00' });
+  const later = backendHarness(h.rows, { now: '2026-09-14T12:00:00+08:00' });
   assert.deepEqual(later.post(payload), { ok: true });
   assert.equal(later.rows.length, 2);
   assert.equal(later.messages.length, 0);

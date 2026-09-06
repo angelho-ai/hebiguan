@@ -37,9 +37,9 @@ hebiguan/
 ## 上線前 checklist（在 `index.html` 搜尋 `const CONFIG`）
 
 - [ ] `SCRIPT_URL`：完成 `apps-script/SETUP.md` 後把 Apps Script 網址貼入（表單才會寫進 Google Sheet）
-- [ ] `PRICE_WAN`：本戶開價（萬）；`MARKET_RENT`：目前月租行情參考 36,000 元。年租金與毛投報率依行情試算，不代表已成交租金或保證收益；異動時也要同步靜態文案、比較表單價與頁首分享資訊
+- [ ] `PRICE_WAN`：本戶售價（萬），目前採不二價銷售；`MARKET_RENT`：目前月租行情參考 36,000 元。年租金與毛投報率依行情試算，不代表已成交租金或保證收益；異動時也要同步靜態文案、比較表單價與頁首分享資訊
 - [ ] `MEDIA`：照片影片放進 `media/` 後把檔名加進清單（第一張＝頁首大圖）
-- [ ] `DATES`：2026/9/6、9/12 14:00–17:00，及 9/11 12:00–13:00；每場一小時、一組。日期的 `iso` 與 `label`、起迄時間需同步 Apps Script 的 `BOOKING_DATES`；容量需與後端 `SLOT_CAPACITY` 一致。頁面場次說明自動生成，已開始場次自動排除
+- [ ] `DATES`：2026/9/12、9/13 09:00–17:00；每場一小時、一組。日期的 `iso` 與 `label`、起迄時間需同步 Apps Script 的 `BOOKING_DATES`；容量需與後端 `SLOT_CAPACITY` 一致。頁面場次說明自動生成，已開始場次自動排除
 
 ## 表單欄位
 

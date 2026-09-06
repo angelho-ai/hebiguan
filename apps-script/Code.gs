@@ -18,9 +18,8 @@ const FLEXIBLE_DATE = "其他時間（送出後與您協調）";
 const FLEXIBLE_SLOT = "由專人與您聯繫安排";
 // 異動場次時，需同步 index.html 的 CONFIG.DATES；開始時間以台北時間為準。
 const BOOKING_DATES = [
-  { iso: "2026-09-06", label: "2026/9/6（日）", start: "14:00", end: "17:00", every: 60 },
-  { iso: "2026-09-11", label: "2026/9/11（五）", start: "12:00", end: "13:00", every: 60 },
-  { iso: "2026-09-12", label: "2026/9/12（六）", start: "14:00", end: "17:00", every: 60 },
+  { iso: "2026-09-12", label: "2026/9/12（六）", start: "09:00", end: "17:00", every: 60 },
+  { iso: "2026-09-13", label: "2026/9/13（日）", start: "09:00", end: "17:00", every: 60 },
 ];
 const CONTACT_HEADERS = ["LINE ID", "個資同意", "希望看屋時間", "通知狀態", "預約識別碼"];
 
